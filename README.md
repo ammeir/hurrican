@@ -4,8 +4,9 @@
 Hurrican is a freeware jump and shoot game created by Poke53280 that is based on the Turrican game series. Blast your way through nine action-packed levels filled with different enemies and powerups.
 
 ### Running the game
--Unzip hurrican.zip and copy the contents to ux0:data/ so that you have a folder ux0:data/hurrican/data  
--Copy runtime shader compiler libshacccg.suprx to ur0:data/. Follow this [guide](https://samilops2.gitbook.io/vita-troubleshooting-guide/shader-compiler/extract-libshacccg.suprx) on how to extract it from your Vita.
+-Unzip `hurrican.zip` and copy the contents to `ux0:data/` so that you have a folder `ux0:data/hurrican/data`  
+-Copy runtime shader compiler `libshacccg.suprx` to `ur0:data/`. Follow this [guide](https://samilops2.gitbook.io/vita-troubleshooting-guide/shader-compiler/extract-libshacccg.suprx) on how to extract it from your Vita.  
+-Install `hurrican.vpk`
 
 ### Controls
 Left analog stick = move/aim  
