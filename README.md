@@ -25,14 +25,14 @@ Start = main menu
 -If you are on Windows, install [MSYS2](http://msys2.org) command shell  
 -Clone hurrican repo into a folder somewhere  
 -Build and install dependencies vitaGL, vitaShaRK and mathneon  
--Compile and package:  
+-Compile:  
   cmake "your hurrican repo folder" -DBUILD_TYPE=Release  
   make
 
 For a debug version replace Release with Debug.
 
 ### Performance 
-This port needs a lot more optimization. Vita struggles when there are lots of particles in the air and in certain boss fights. But you can get a decent performance if you set the detail level to low/medium. Overclocking to maximum 500 MHz also helps.
+This port needs a lot more optimization. Vita struggles when there are lots of particles in the air and in certain boss fights. But you can get a decent performance if you set the detail level to low/medium.
 
 ### Known issues
 -Frame drops in some parts of the game  
