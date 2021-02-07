@@ -36,7 +36,7 @@ This port needs a lot more optimization. Vita struggles when there are lots of p
 
 ### Known issues
 -Frame drops in some parts of the game  
--White gaps between background tiles are sometimes visible, especially in level 7
+-Gaps between background tiles are sometimes visible, especially in level 7
 
 
 ### Credits
