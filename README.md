@@ -42,5 +42,5 @@ This port needs a lot more optimization. Vita struggles when there are lots of p
 ### Credits
 Thanks to Poke53280 team for making this game, releasing the source, and making it freeware.  
 Thanks to developer Pickle136 for adding SDL/OpenGL-ES support.  
-Thanks to developer DKS for impoving and optimizing the code.  
+Thanks to developer DKS for improving and optimizing the code.  
 Thanks to Rinnegatamante for making the vitaGL library.
