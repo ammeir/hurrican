@@ -278,7 +278,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 
             if (SmokeDelay < 0.0f)
             {
-                SmokeDelay = 2.0f;//0.4f; // PSVITA TWEAK
+                SmokeDelay = 1.6f;//0.4f; // PSVITA TWEAK
                 PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
                 PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
             }

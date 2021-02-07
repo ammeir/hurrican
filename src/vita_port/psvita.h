@@ -8,7 +8,7 @@
 #define APP_DIR							  "ux0:data/hurrican/"
 #define USE_STORAGE_PATH APP_DIR		  "data"
 #define USE_SAVE_PATH APP_DIR			  "save"
-#define PSV_LOG_FILE APP_DIR			  "trace.log"
+#define PSV_LOG_FILE APP_DIR			  "Game_Log.txt"
 
 #define PSV_CPU_SPEED_333				  0
 #define PSV_CPU_SPEED_444				  1

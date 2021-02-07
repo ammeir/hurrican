@@ -278,8 +278,12 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     // Initialize defaults, Video and Audio subsystems
     Protokoll.WriteText( false, "Initializing SDL.\n" );
 
-    //if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1)
-	if (SDL_Init(SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1) // PSVITA
+#ifdef PSVITA
+	// Video init conflicts with vitaGL init.
+	if (SDL_Init(SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1)
+#else
+    if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1)
+#endif	
     {
         Protokoll.WriteText( false, "Failed to initialize SDL: %s.\n", SDL_GetError() );
         return false;

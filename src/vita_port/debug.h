@@ -18,7 +18,7 @@ static void PSV_DEBUG(const char* str, ...) {
 	vsprintf(buf, str, list);
 	va_end(list);
 
-	FILE *fp = fopen("ux0:data/trace.log", "a+"); // Linux
+	FILE *fp = fopen("ux0:data/trace1.log", "a+"); // Linux
 	
 	if (fp != NULL){
 		fprintf(fp, buf);

@@ -72,6 +72,7 @@ Logdatei::~Logdatei()
 
 void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 {
+
 #ifndef _DEBUG
 	return;
 #endif

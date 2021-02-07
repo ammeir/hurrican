@@ -126,8 +126,10 @@ DirectInputClass		DirectInput;					// Input-Objekt
 TimerClass				Timer;						    // Timer Klasse für die Framerate
 #if defined(__AROS__)
 Logdatei				Protokoll("T:Game_Log.txt");	// Protokoll Datei
-#else
+#elif defined(PSVITA)
 Logdatei				Protokoll(PSV_LOG_FILE);		// Protokoll Datei
+#else
+Logdatei				Protokoll("Game_Log.txt");		// Protokoll Datei
 #endif
 SoundManagerClass       SoundManager;                   // Sound Manager
 DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
@@ -858,9 +860,9 @@ int main(int argc, char *argv[])
                 Heartbeat();
 
                 // Eingabeger�te updaten
-                //DirectInput.UpdateTastatur  (); // No need for PSVITA
+                //DirectInput.UpdateTastatur  (); // PSVITA TWEAK
                 DirectInput.UpdateJoysticks ();
-                //DirectInput.UpdateMaus(false); // No need for PSVITA
+                //DirectInput.UpdateMaus(false); // PSVITA TWEAK
 
                 // Soundchannels updaten
                 SoundManager.Update();
