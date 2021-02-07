@@ -13,7 +13,7 @@ include("${VITASDK}/share/vita.cmake" REQUIRED)
 
 set(VITA_APP_NAME "Hurrican")
 set(VITA_TITLEID  "MEIR00003")
-set(VITA_VERSION  "01.00")
+set(VITA_VERSION  "00.90")
 
 
 if (BUILD_TYPE MATCHES Release)
