@@ -32,7 +32,7 @@ Start = main menu
 For a debug version replace Release with Debug.
 
 ### Known issues
--Frame drops in some parts of the game (e.g near waterfalls and with certain boss fights)
+-Frame drops in some parts of the game (e.g near waterfalls and with certain boss fights)  
 -Gaps between background tiles are sometimes visible, especially in level 7
 
 
