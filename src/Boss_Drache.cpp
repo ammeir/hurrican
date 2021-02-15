@@ -232,13 +232,28 @@ void GegnerDrache::DoDraw(void)
     int i = 0;
     float tempx = (float)(xPos-TileEngine.XOffset) + 10.0f - mirrorOffset * 165;
 
+	// PSVITA TWEAK
+	// Batch call sprites.
+	int vertices_count = 0;
+	VERTEX2D* vertices = new VERTEX2D[NUM_TAILS * 6];
+
     for (i = 0; i < NUM_TAILS; i++)
     {
-        Tail.RenderSpriteScaled(tempx,
+		Tail.GetScaledSpriteAnimTriangles(tempx,
                                 (float)(yPos-TileEngine.YOffset) + 20.0f + (float)(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
-                                12 - i / 4, 29  - i / 2, 0, 0xFFFFFFFF);
+                                12 - i / 4, 29  - i / 2, 0, 0xFFFFFFFF, &vertices[vertices_count]);
+		vertices_count += 6;
+        //Tail.RenderSpriteScaled(tempx,
+        //                        (float)(yPos-TileEngine.YOffset) + 20.0f + (float)(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
+        //                        12 - i / 4, 29  - i / 2, 0, 0xFFFFFFFF);
         tempx -= (12 - i / 4) * mirrored;
     }
+
+	DirectGraphics.SetTexture(Tail.itsTexIdx);
+	DirectGraphics.SetFilterMode (true);
+    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, vertices_count/3, &vertices[0]);
+	DirectGraphics.SetFilterMode (false);
+	delete[] vertices;
 
     // Schwanz Spitze
     //

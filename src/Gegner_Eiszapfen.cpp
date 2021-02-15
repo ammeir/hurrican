@@ -54,13 +54,18 @@ void GegnerEiszapfen::DoKI(void)
 
             SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
 
-			int free_space_particles = PartikelSystem.GetSpacePartikel();
-			int size = free_space_particles > 24? 12: free_space_particles>>1; // PSVITA TWEAK
-            for (int i=0; i < size /*15*/; i++)
+            /* for (int i=0; i < 15; i++)
             {
                 PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, WATERFLUSH2);
                 PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, SMOKE);
-            }
+            }*/
+
+			// PSVITA TWEAK
+			// Make sequental calls so we can batch draw.
+			for (int i=0; i< 15; ++i)
+				PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, WATERFLUSH2);
+			for (int i=0; i< 15; ++i)
+				PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, SMOKE);
         }
     }
     break;
@@ -95,17 +100,22 @@ void GegnerEiszapfen::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 48? 24: free_space_particles>>1; // PSVITA TWEAK
-	if (size > 0){
-		float _xPos = xPos - 20;
-		float _yPos = yPos - 10;
-		for (int i=0; i < size /*30*/; ++i)
-		{
-			PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, WATERFLUSH2);
-			PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, SMOKE);
-		}
-	}
+	
+	float _xPos = xPos - 20;
+	float _yPos = yPos - 10;
+
+	/*for (int i=0; i < 30; ++i)
+	{
+		PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, WATERFLUSH2);
+		PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, SMOKE);
+	}*/
+
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 30; ++i)
+		PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, WATERFLUSH2);
+	for (int i=0; i< 30; ++i)
+		PartikelSystem.PushPartikel (_xPos + rand ()%35, _yPos + rand()%60, SMOKE);
 
     Player[0].Score += 100;
 }

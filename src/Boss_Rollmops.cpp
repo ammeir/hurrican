@@ -932,7 +932,7 @@ void GegnerRollmops::GegnerExplode(void)
     for (i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_TRACE);
 
-    for (i = 0; i < 120/*150*/; ++i) // PSVITA TWEAK
+    for (i = 0; i < 150; ++i)
         PartikelSystem.PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, WATERFLUSH_HIGH);
 
     ShakeScreen(5.0f);

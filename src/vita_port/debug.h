@@ -9,7 +9,7 @@
 #include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
 
 
-#ifdef PSV_DEBUG_CODE
+//#ifdef PSV_DEBUG_CODE
 static void PSV_DEBUG(const char* str, ...) {
 	va_list list;
 	char buf[512];
@@ -18,7 +18,7 @@ static void PSV_DEBUG(const char* str, ...) {
 	vsprintf(buf, str, list);
 	va_end(list);
 
-	FILE *fp = fopen("ux0:data/trace1.log", "a+"); // Linux
+	FILE *fp = fopen("ux0:data/trace.log", "a+"); // Linux
 	
 	if (fp != NULL){
 		fprintf(fp, buf);
@@ -26,9 +26,9 @@ static void PSV_DEBUG(const char* str, ...) {
 		fclose(fp);
 	}
 }
-#else
-static void PSV_DEBUG(const char* str, ...) {}
-#endif
+//#else
+//static void PSV_DEBUG(const char* str, ...) {}
+//#endif
 
 
 

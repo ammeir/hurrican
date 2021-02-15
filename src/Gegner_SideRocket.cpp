@@ -97,7 +97,7 @@ void GegnerSideRocket::DoKI(void)
 
         while (AnimCount <= 0.0f)
         {
-            AnimCount += 0.05f;
+            AnimCount += 0.1f/*0.05f*/; // PSVITA TWEAK
 
             if (Value1 == 0)
                 PartikelSystem.PushPartikel (xPos + 35, yPos + 3, ROCKETSMOKE);
@@ -136,11 +136,18 @@ void GegnerSideRocket::GegnerExplode(void)
 
     PartikelSystem.PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i < 8/*10*/; i++) // PSVITA TWEAK
+    /*for (int i=0; i < 10; i++)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
-    }
+    }*/
+
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
 
     Player[0].Score += 50;
 }

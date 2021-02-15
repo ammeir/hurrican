@@ -181,7 +181,7 @@ void GegnerLavamann::DoKI(void)
 
 void GegnerLavamann::GegnerExplode(void)
 {
-    for (int i=0; i<6/*8*/; i++) // PSVITA TWEAK
+    for (int i=0; i<8; i++)
     {
         PartikelSystem.PushPartikel(float(xPos - 30 + rand()%40),
                                       float(yPos - 30 + rand()%50), SMOKEBIG);

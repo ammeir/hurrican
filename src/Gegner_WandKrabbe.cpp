@@ -304,10 +304,10 @@ void GegnerWandKrabbe::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
-    for (int i=0; i < 5/*6*/; ++i) // PSVITA TWEAK
+    for (int i=0; i < 6; ++i)
         PartikelSystem.PushPartikel (xPos - 20 + rand ()%10, yPos + rand()%30, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i < 16/*20*/; ++i) // PSVITA TWEAK
+    for (int i=0; i < 20; ++i)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%30, yPos + rand()%64, FUNKE);
         PartikelSystem.PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);

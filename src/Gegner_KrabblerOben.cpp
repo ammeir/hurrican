@@ -101,7 +101,7 @@ void GegnerKrabblerOben::DoKI(void)
 void GegnerKrabblerOben::GegnerExplode(void)
 {
     // Explosion
-    for (int i=0; i<4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i<5; i++)
         PartikelSystem.PushPartikel(float(xPos - 15) + rand()%20,
                                       float(yPos - 15) + rand()%40, EXPLOSION_MEDIUM3);
 

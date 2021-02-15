@@ -170,13 +170,13 @@ void GegnerMittelSpinne::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM3);
 
-    for (int i=0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 10; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%80, yPos + rand()%50, SPIDERSPLITTER);
 
-    for (int i=0; i < 24/*30*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 30; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%80, yPos + rand()%50, FUNKE);
 
-    for (int i=0; i < 5/*7*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 7; i++)
         PartikelSystem.PushPartikel (xPos  - 10 + rand ()%60, yPos - 10 + rand()%60, EXPLOSION_MEDIUM2);
 
     Player[0].Score += 250;

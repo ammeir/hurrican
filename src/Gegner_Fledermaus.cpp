@@ -184,7 +184,7 @@ void GegnerFledermaus::GegnerExplode(void)
 {
 	float _xPos = xPos + 10;
 	float _yPos = yPos + 10;
-    for (int i = 0; i < 50/*100*/; ++i) // PSVITA TWEAK
+    for (int i = 0; i < 100; ++i)
         PartikelSystem.PushPartikel(_xPos + rand()%35, _yPos + rand()%25, FUNKE);
 
     PartikelSystem.PushPartikel(xPos - 5, yPos - 5, EXPLOSION_MEDIUM2);

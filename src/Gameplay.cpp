@@ -385,15 +385,14 @@ void GameLoop(void)
 
     // Partikel abhandeln
     PartikelSystem.DoPartikel();
-
+	
     // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
     DirectGraphics.SetColorKeyMode();
-
     TileEngine.DrawWater();
     TileEngine.DrawBackLevelOverlay();
     TileEngine.DrawOverlayLevel();
     TileEngine.DrawShadow();
-
+	
     // HUD anhandeln
     HUD.DoHUD();
 
@@ -833,11 +832,6 @@ void CreateDefaultConfig(void)
     // Max detail is too much for GCW Zero:
     options_Detail = DETAIL_HIGH;   
 #endif //GCW
-
-#ifdef PSVITA
-	// Medium detail is enough for Vita.
-	options_Detail = DETAIL_MEDIUM; 
-#endif
 
     SaveConfig ();
 }

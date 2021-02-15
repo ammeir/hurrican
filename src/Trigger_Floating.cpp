@@ -77,7 +77,7 @@ void GegnerFloating::DoKI(void)
     //
     if (AnimCount <= 0.0f)
     {
-        AnimCount = 0.5f;//0.15f; // PSVITA TWEAK
+        AnimCount = 0.15f;
         PartikelSystem.PushPartikel (xPos + 14, yPos + 5, FLOATSMOKE);
     }
 

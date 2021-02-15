@@ -21,7 +21,10 @@
 #include "Gegner_Stuff.h"
 #include "Player.h"
 #include "Tileengine.h"
+#include "Partikelsystem.h"
 #include "Timer.h"
+
+// extern int renderCallCount; // For testing draw call counts
 
 // --------------------------------------------------------------------------------------
 // Konstruktor : HUD Grafiken laden und Werte initialisieren
@@ -177,7 +180,7 @@ void HUDClass::ShowHUD(void)
     WeaponRahmen.RenderSprite(xpos + 216 + 3*32, ypos +  35, 0, color);
 
     for (int j=0; j<Player[0].CurrentWeaponLevel[3]; j++){
-		WeaponPunkt.PrepareSprite(xpos + 217 + 3*32, ypos +  50 - j, color, &weaponpunkt_vertices[weaponpunkt_ind]);
+		WeaponPunkt.GetSpriteTriangles(xpos + 217 + 3*32, ypos +  50 - j, 0, color, &weaponpunkt_vertices[weaponpunkt_ind]);
 		weaponpunkt_ind += 6;
         //WeaponPunkt.RenderSprite(xpos + 217 + 3*32, ypos +  50 - j, 0, color);
 	}
@@ -415,7 +418,7 @@ void HUDClass::ShowHUD(void)
             if (NUMPLAYERS == 1 ||
                     Player[p].SelectedWeapon != Player[1-p].SelectedWeapon){
 
-				WeaponRahmen.PrepareSprite(xpos + 216 + i*32, ypos +  35, playercol, &weaponrahmen_vertices[weaponrahmen_ind]);
+				WeaponRahmen.GetSpriteTriangles(xpos + 216 + i*32, ypos +  35, playercol, 0, &weaponrahmen_vertices[weaponrahmen_ind]);
 				weaponrahmen_ind += 6;
                 //WeaponRahmen.RenderSprite(xpos + 216 + i*32, ypos +  35, 0, playercol);
 			}else{
@@ -443,7 +446,7 @@ void HUDClass::ShowHUD(void)
                         (Player[p].SelectedWeapon == (int)i &&
                          Player[p].SelectedWeapon != Player[1-p].SelectedWeapon)){
 
-					WeaponPunkt.PrepareSprite(xpos + 217 + i*32, ypos +  50 - j * 2, playercol, &weaponpunkt_vertices[weaponpunkt_ind]);
+					WeaponPunkt.GetSpriteTriangles(xpos + 217 + i*32, ypos +  50 - j * 2, 0, playercol, &weaponpunkt_vertices[weaponpunkt_ind]);
 					weaponpunkt_ind += 6;
                     //WeaponPunkt.RenderSprite(xpos + 217 + i*32, ypos +  50 - j * 2 , 0, playercol);
 				}else{
@@ -457,7 +460,9 @@ void HUDClass::ShowHUD(void)
                     else
                         WeaponPunkt.itsRect.left = 4;
 
-                    WeaponPunkt.RenderSprite(xpos + p * 4 + 217 + i*32, ypos +  50 - j * 2 , playercol);
+					WeaponPunkt.GetSpriteTriangles(xpos + p * 4 + 217 + i*32, ypos +  50 - j * 2 , -1, playercol, &weaponpunkt_vertices[weaponpunkt_ind]);
+					weaponpunkt_ind += 6;
+                    //WeaponPunkt.RenderSprite(xpos + p * 4 + 217 + i*32, ypos +  50 - j * 2 , playercol);
                 }
             }
         }
@@ -490,7 +495,7 @@ void HUDClass::ShowHUD(void)
         char	z = Buffer[i]-48;
 
         HUDFontBig.SetRect(z*12, 0, z*12+12, 25);
-		HUDFontBig.PrepareSprite(xpos - strlen(Buffer)*13 + i*13 + 48, ypos + 22, Color, &hudfontbig_vertices[hudfontbig_ind]);
+		HUDFontBig.GetSpriteTriangles(xpos - strlen(Buffer)*13 + i*13 + 48, ypos + 22, -1, Color, &hudfontbig_vertices[hudfontbig_ind]);
 		hudfontbig_ind += 6;
         //HUDFontBig.RenderSprite(xpos - strlen(Buffer)*13+ i*13 + 48, ypos + 22, Color);
     }
@@ -506,6 +511,10 @@ void HUDClass::ShowHUD(void)
         Player[0].Score = 0;
 
     _itoa_s(Player[0].Score, Buffer, 10);
+	
+	// For testing. Prints number of particles in the pool. Use this in conjuction winth 
+	// renderCallCount variable too see batch draw performance.
+	//_itoa_s(PartikelSystem.GetNumPartikel(), Buffer, 10); 
 
 	hudfontbig_ind = 0;
     int len = strlen(Buffer);
@@ -514,7 +523,7 @@ void HUDClass::ShowHUD(void)
         char	z = Buffer[i]-48;
 
         HUDFontBig.SetRect(z*12, 0, z*12+12, 25);
-		HUDFontBig.PrepareSprite(xpos - strlen(Buffer)*13 + i*13 + 195, ypos + 22, Color, &hudfontbig_vertices[hudfontbig_ind]);
+		HUDFontBig.GetSpriteTriangles(xpos - strlen(Buffer)*13 + i*13 + 195, ypos + 22, -1, Color, &hudfontbig_vertices[hudfontbig_ind]);
 		hudfontbig_ind += 6;
         //HUDFontBig.RenderSprite(xpos - strlen(Buffer)*13 + i*13 + 195, ypos + 22, Color);
     }
@@ -543,7 +552,7 @@ void HUDClass::ShowHUD(void)
         char	z = Buffer[i]-48;
 
         HUDFontBig.SetRect(z*12, 0, z*12+12, 25);
-		HUDFontBig.PrepareSprite(xpos - strlen(Buffer)*13 + i*13 + 527, ypos + 22, Color, &hudfontbig_vertices[hudfontbig_ind]);
+		HUDFontBig.GetSpriteTriangles(xpos - strlen(Buffer)*13 + i*13 + 527, ypos + 22, -1, Color, &hudfontbig_vertices[hudfontbig_ind]);
 		hudfontbig_ind += 6;
         //HUDFontBig.RenderSprite(xpos - strlen(Buffer)*13 + i*13 + 527, ypos + 22, Color);
     }
@@ -563,13 +572,16 @@ void HUDClass::ShowHUD(void)
 
     // Verbleibende Zeit anzeigen
 	hudfontbig_ind = 0;
-    _itoa_s(int(TileEngine.Timelimit), Buffer, 10);
+    
+	_itoa_s(int(TileEngine.Timelimit), Buffer, 10);
+	//_itoa_s(renderCallCount, Buffer, 10); // For testing. Prints number of calls to openGL.
+	
     for(unsigned int i=0; i<strlen(Buffer); i++)
     {
         char	z = Buffer[i]-48;
 
         HUDFontBig.SetRect(z*12, 0, z*12+12, 25);
-		HUDFontBig.PrepareSprite(xpos - strlen(Buffer)*13 + i*13 + 467, ypos + 22, Color, &hudfontbig_vertices[hudfontbig_ind]);
+		HUDFontBig.GetSpriteTriangles(xpos - strlen(Buffer)*13 + i*13 + 467, ypos + 22, -1, Color, &hudfontbig_vertices[hudfontbig_ind]);
 		hudfontbig_ind += 6;
         //HUDFontBig.RenderSprite(xpos - strlen(Buffer)*13 + i*13 + 467, ypos + 22, Color);
 
@@ -586,7 +598,6 @@ void HUDClass::ShowHUD(void)
             if ((int)(TileEngine.Timelimit) == 1)
                 xoff = -size / 2.4f;
 
-			// Todo: batch call this
             HUDFontBig.RenderSpriteScaled(320 - size / 2.0f + xoff,
                                           240 - size / 2.0f,
                                           12 + (int)size,

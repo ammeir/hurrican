@@ -300,6 +300,11 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
     if (!Text || strlen(Text) == 0)
         return true;
 
+	// PSVITA TWEAK
+	// Batch draw all sprites.
+	int vertices_count = 0;
+	VERTEX2D* vertices = new VERTEX2D[strlen(Text) * 6];
+
     for(unsigned int i=0; i<strlen(Text); i++)
     {
         z = Text[i];						// Aktuell zu bearbeitendes Zeichen holen
@@ -316,7 +321,9 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
         if (Text[i] != 32 && Text[i] != '\n') {
             //DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                mTexture->RenderSprite(x, y, Color);
+				mTexture->GetSpriteTriangles(x, y, -1, Color, &vertices[vertices_count]);
+				vertices_count += 6;
+                //mTexture->RenderSprite(x, y, Color);
             } else {
                 mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
             }
@@ -348,6 +355,14 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
             }
         }
     }
+
+	if (vertices_count > 0)
+    {
+        DirectGraphics.SetTexture(mTexture->itsTexIdx);
+        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, vertices_count/3, &vertices[0]);
+    }
+
+	delete[] vertices;
 
     return true;
 }
@@ -400,6 +415,11 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
     unsigned char z;
     float oldx = x;
 
+	// PSVITA TWEAK
+	// Batch draw all sprites.
+	int vertices_count = 0;
+	VERTEX2D* vertices = new VERTEX2D[strlen(Text) * 6];
+
     for(unsigned int i=0; i<strlen(Text); i++)
     {
         z = Text[i];						// Aktuell zu bearbeitendes Zeichen holen
@@ -413,9 +433,11 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if(Text[i] != 32 &&
-                Text[i] != '\n')
-            mTexture->RenderSprite(x, y, Color);
+        if(Text[i] != 32 && Text[i] != '\n'){
+			mTexture->GetSpriteTriangles(x, y, -1, Color, &vertices[vertices_count]);
+			vertices_count += 6;
+            //mTexture->RenderSprite(x, y, Color);
+		}
 
         if(Text[i] == 32)
             x += mXCharSize;				// Bei Space frei lassen
@@ -427,6 +449,14 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
         else
             x += mCharLength[z]+1;			// Ansonsten Breite des Zeichens weiter
     }
+
+	if (vertices_count > 0)
+    {
+        DirectGraphics.SetTexture(mTexture->itsTexIdx);
+        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, vertices_count/3, &vertices[0]);
+    }
+
+	delete[] vertices;
 
     return true;
 }
@@ -440,6 +470,11 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
     RECT rect;
     unsigned char z;
     float oldx = x;
+
+	// PSVITA TWEAK
+	// Batch draw all sprites.
+	int vertices_count = 0;
+	VERTEX2D* vertices = new VERTEX2D[strlen(Text) * 6];
 
     for(unsigned int i=0; i<strlen(Text); i++)
     {
@@ -457,7 +492,9 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
         if (Text[i] != 32 && Text[i] != '\n') {
             //DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                mTexture->RenderSprite(x, y, Color);
+				mTexture->GetSpriteTriangles(x, y, -1, Color, &vertices[vertices_count]);
+				vertices_count += 6;
+                //mTexture->RenderSprite(x, y, Color);
             } else {
                 mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
             }
@@ -488,6 +525,14 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
                 x += float(((mCharLength[z] - 1) + Spacing) * mScaleFactor);	// Ansonsten Breite des Zeichens weiter
             }
     }
+
+	if (vertices_count > 0)
+    {
+        DirectGraphics.SetTexture(mTexture->itsTexIdx);
+        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, vertices_count/3, &vertices[0]);
+    }
+
+	delete[] vertices;
 
     return true;
 }

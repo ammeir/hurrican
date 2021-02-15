@@ -60,7 +60,7 @@ void GegnerRoboMan1::DoKI(void)
     SmokeCount -= 1.0f SYNC;
     if (SmokeCount < 0.0f)
     {
-        SmokeCount += 0.1f;
+        SmokeCount += 0.3f/*0.1f*/;
 
         PartikelSystem.PushPartikel(xPos + 29 + rand()%5, yPos+90, ROBOMANSMOKE);
         PartikelSystem.PushPartikel(xPos + 40 + rand()%5, yPos+90, ROBOMANSMOKE);
@@ -203,9 +203,8 @@ void GegnerRoboMan1::GegnerExplode(void)
 
     int i;
 
-	// PSVITA TWEAK
-    for (i=0; i <  2/*3*/; i++)	PartikelSystem.PushPartikel (xPos - 40 + rand ()%70, yPos + rand()%40, EXPLOSION_BIG);
-    for (i=0; i < 8/*10*/; i++)	PartikelSystem.PushPartikel (xPos - 10 + rand ()%70, yPos + rand()%60, EXPLOSION_MEDIUM2);
-    for (i=0; i < 8/*10*/; i++)	PartikelSystem.PushPartikel (xPos + rand ()%70, yPos + 20 + rand()%60, SPIDERSPLITTER);
+    for (i=0; i < 3; i++)	PartikelSystem.PushPartikel (xPos - 40 + rand ()%70, yPos + rand()%40, EXPLOSION_BIG);
+    for (i=0; i < 10; i++)	PartikelSystem.PushPartikel (xPos - 10 + rand ()%70, yPos + rand()%60, EXPLOSION_MEDIUM2);
+    for (i=0; i < 10; i++)	PartikelSystem.PushPartikel (xPos + rand ()%70, yPos + 20 + rand()%60, SPIDERSPLITTER);
 
 }

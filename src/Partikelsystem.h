@@ -224,19 +224,12 @@ private:
 
     //DKS - Never used, disabled:
     //D3DCOLOR			Color;						// Farbe des Partikels
-
     float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
     float				xAcc, yAcc;					// Beschleunigung des Partikels
-
-    //DKS - Changed from int to int16_t:
-    uint16_t			AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
-
     float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
-    bool				Rotate;						// evtl rotieren?
     float				Rot;						// Rotation
     float				RotDir;						// Richtung
     bool				BounceWalls;				// an W�nden abprallen ?
-    bool				OwnDraw;					// Extrawurscht beim rendern?
     bool				RemoveWhenOffScreen;		// verschiwnden lassen, wenn ausserhalb des Screeens?
 
 public:
@@ -245,8 +238,11 @@ public:
 
     //DKS - Changed from int to int16_t:
     int16_t				PartikelArt;				// Art des Partikels (siehe Defines)
-
     float				Lebensdauer;				// Wie lange existiert das Partikel ?
+	bool				OwnDraw;                    // Extrawurscht beim rendern?
+	bool				Rotate;                     // evtl rotieren?
+	//DKS - Changed from int to int16_t:
+	uint16_t			AnimPhase, AnimEnde;        // Aktuelle Phase und Endphase
 
     
     //DKS - Moved construction duties into CreatePartikel(), since all partikels are
@@ -261,6 +257,7 @@ public:
                         PlayerClass* pParent = NULL);
     void Run	(void);								// Partikel animieren und bewegen
     bool Render	(void);								// Partikel anzeigen
+	void GetTriangles(VERTEX2D* vertices);
 
     //DKS: Found that colors were getting set unsafely in Run() and elsewhere, and I
     //      also converted the r,g,b,a member vars to uint8_t; these ensure safety:
@@ -321,7 +318,8 @@ private:
 #ifndef USE_NO_MEMPOOLING
     MemPool<PartikelClass, 5000> particle_pool;
 #endif
-
+	inline int				getAdjacentCount(PartikelClass* node);			
+	
 public:
     float					xtarget, ytarget;		// Zielpunkt, auf den sich bestimmte Partikel richten
     float					ThunderAlpha;			// Alpha für Blitz
@@ -350,8 +348,6 @@ public:
 
     void ClearAll	(void);							// Alle Objekte löschen
     int  GetNumPartikel(void);						// Zahl der Partikel zurückliefern
-    int  GetMaxPartikel(void);
-	int  GetSpacePartikel(void);
 	void DoPartikel(void);							// Alle Partikel der Liste animieren/anzeigen
     void DoPartikelSpecial(bool ShowThem);			// Alle Partikel der Liste animieren/anzeigen
     void DrawOnly(void);							// Alle Partikel der Liste nur anzeigen

@@ -172,10 +172,8 @@ void GegnerStahlfaust::DoKI(void)
             SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
             SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
 
-			int free_space_particles = PartikelSystem.GetSpacePartikel();
-			int size = free_space_particles > 20? 20: free_space_particles; // PSVITA TWEAK
             // Rauch am Boden erzeugen
-            for (int i=0; i<size /*25*/; ++i)
+            for (int i=0; i<25; ++i)
                 PartikelSystem.PushPartikel(xPos + rand()%200, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
 
             // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
@@ -233,12 +231,10 @@ void GegnerStahlfaust::DoKI(void)
             SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
             SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
 
-			int free_space_particles = PartikelSystem.GetSpacePartikel();
-			int size = free_space_particles > 20? 20: free_space_particles; // PSVITA TWEAK
 			float _xPos = xPos + 30;
-			float _yPos = yPos + GegnerRect[GegnerArt].bottom-20; // CHECK THIS
+			float _yPos = yPos + GegnerRect[GegnerArt].bottom-20;
             // Rauch am Boden erzeugen
-            for (int i=0; i<size /*25*/; i++)
+            for (int i=0; i<25; i++)
                 PartikelSystem.PushPartikel(_xPos + rand()%180, _yPos, SMOKE);
 
             // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen

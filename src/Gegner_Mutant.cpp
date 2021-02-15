@@ -177,13 +177,13 @@ void GegnerMutant::DoKI(void)
 
 void GegnerMutant::GegnerExplode(void)
 {
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + rand()%60 - 10, yPos + rand()%60, EXPLOSION_GREEN);
 
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SPIDERSPLITTER);
 
-    for (int i = 0; i < 12/*15*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 15; i++)
         PartikelSystem.PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
 
     //DKS - While fixing volume of jumping (look at note further above), made this 3D too:

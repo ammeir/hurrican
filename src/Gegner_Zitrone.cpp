@@ -347,14 +347,23 @@ void GegnerZitrone::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
-    for (int i = 0; i < 8/*12*/; i++) // PSVITA TWEAK
+    /*for (int i = 0; i < 12; i++)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
         PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
         PartikelSystem.PushPartikel (xPos + 10 + rand ()%80, yPos - 10 + rand ()%90, SCHROTT1);
-    }
+    }*/
 
-    for (int i = 0; i < 3/*4*/; i++) // PSVITA TWEAK
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 12; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
+	for (int i=0; i< 12; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
+	for (int i=0; i< 12; ++i)
+		PartikelSystem.PushPartikel (xPos + 10 + rand ()%80, yPos - 10 + rand ()%90, SCHROTT1);
+
+    for (int i = 0; i < 4; i++)
         PartikelSystem.PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
 
     Player[0].Score += 400;

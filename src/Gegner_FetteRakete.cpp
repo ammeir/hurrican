@@ -174,7 +174,7 @@ void GegnerFetteRakete::GegnerExplode(void)
 
     PartikelSystem.PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i < 4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 5; i++)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);

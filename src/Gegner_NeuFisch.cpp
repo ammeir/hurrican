@@ -196,18 +196,25 @@ void GegnerNeuFisch::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
-    for (int i = 0; i < 8/*10*/; ++i) // PSVITA TWEAK
-    {
-        // Fetzen erzeugen
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%90),
-                                      float(yPos - 5  + rand()%70), PIRANHATEILE);
+    //for (int i = 0; i < 10; ++i)
+    //{
+    //    // Fetzen erzeugen
+    //    PartikelSystem.PushPartikel(float(xPos - 20 + rand()%90),
+    //                                  float(yPos - 5  + rand()%70), PIRANHATEILE);
 
-        // und noch n paar Luftbl�sschen dazu
-        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%90),
-                                      float(yPos + 10  + rand()%70), BUBBLE);
-    }
+    //    // und noch n paar Luftbl�sschen dazu
+    //    PartikelSystem.PushPartikel(float(xPos - 10  + rand()%90),
+    //                                  float(yPos + 10  + rand()%70), BUBBLE);
+    //}
 
-    // Blutwolke dazu
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel(float(xPos - 20 + rand()%90), float(yPos - 5  + rand()%70), PIRANHATEILE);
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel(float(xPos - 10  + rand()%90), float(yPos + 10  + rand()%70), BUBBLE);
+    
+	// Blutwolke dazu
     //
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos + rand()%60),

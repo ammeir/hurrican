@@ -48,6 +48,8 @@ RECT					PartikelRect[MAX_PARTIKELGFX];		// Rechtecke für Level Kollision
 int						CurrentPartikelTexture;				// Aktuelle Textur der Partikel
 int						DrawMode;							// normale oder rotierte Partikel?
 
+//int					renderCallCount;				    // For testing draw call counts
+
 // --------------------------------------------------------------------------------------
 // PartikelKlasse Funktionen
 // --------------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
     //DKS - Added initializer for lebensdauer to its most commonly-set value,
     //      (code de-duplication in rest of function)
-    Lebensdauer = 204;//230;//255.0f; // PSVITA TWEAK
+    Lebensdauer = 255.0f;
     
     //DKS - Moved parts of class constructor that weren't redundant here, and made
     //      class constructor empty, since all particles are created through this
@@ -202,7 +204,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
@@ -221,7 +223,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
@@ -240,7 +242,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
@@ -261,7 +263,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%2+5)/10.0f);
 
@@ -283,7 +285,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             //DKS - This sprite actually has 25 frames, so increased this to 24:
             //AnimEnde	= 22;
             AnimEnde	= 24;
@@ -297,7 +299,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 179;//202;//224;
+            Lebensdauer = 224;
             //DKS - This sprite actually has 25 frames, so increased this to 24:
             //AnimEnde	= 22;
             AnimEnde	= 24;
@@ -313,7 +315,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 179;//202;//224;
+            Lebensdauer = 224;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%5+10)/30.0f);
             PartikelSystem.PushPartikel (x + 32, y + 32, EXPLOSION_KRINGEL);
@@ -331,7 +333,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             AnimEnde	= 15;
             AnimSpeed	= float((rand()%5+10)/15.0f);
 
@@ -343,7 +345,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 179;//202;//224;
+            Lebensdauer = 224;
             //DKS - Changed value to 11 ( it has 12 frames of animation)
             //      This was glitching after switching to using the sprites' itsPreCalcedRects[]
             //AnimEnde	= 12;
@@ -358,7 +360,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 160;//180;//200;
+            Lebensdauer = 200;
             //DKS - Changed value from 16 to 15, this is an off-by-one error:
             //AnimEnde	= 16;
             AnimEnde	= 15;
@@ -401,7 +403,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 192;
 
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             //DKS - This actually has 4 frames of animation, not 2:
             //AnimEnde	= 1;
             AnimEnde	= 3;
@@ -417,7 +419,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 192;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
             //DKS - Off by one error:
             //AnimEnde	= 4;
             AnimEnde	= 3;
@@ -432,7 +434,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 255;
             alpha = 128;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
             ySpeed	    = float (rand()%10) + 5;
             yAcc		= 4.0f;
             RemoveWhenOffScreen = false;
@@ -664,7 +666,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
-            Lebensdauer = 160;//180;//200;
+            Lebensdauer = 200;
             BounceWalls = false;
         }
         break;
@@ -675,7 +677,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
-            Lebensdauer = 160;//180;//200;
+            Lebensdauer = 200;
             BounceWalls = false;
         }
         break;
@@ -727,7 +729,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
-            Lebensdauer = 64;//72;//80;
+            Lebensdauer = 80;
             xSpeed		= (float(rand()%40-20)/10.0f);
             ySpeed		= -float(rand()%40-20)/6.0f;
 
@@ -753,7 +755,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 64;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
 
             switch (Art)
             {
@@ -828,7 +830,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 128;
             alpha = 255;
 
-            Lebensdauer = 72;//81;//90;
+            Lebensdauer = 90;
             xSpeed		= (float(rand()%40-20)/6.0f);
             ySpeed		= -float(rand()%10+10)/5.0f;
 
@@ -844,7 +846,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 140;
 
-            Lebensdauer = 112;//126;//140;
+            Lebensdauer = 140;
             xSpeed		= (float(rand()%40-20)/10.0f);
             ySpeed		= -float(rand()%20+10)/10.0f;
 
@@ -861,7 +863,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 128;
             alpha = 200;
 
-            Lebensdauer = 160;//180;//200;
+            Lebensdauer = 200;
             xSpeed		= (float)(rand()%6-3) * 6.0f;
             ySpeed		= (float)(rand()%10-5) * 2.0f;
             yAcc        = -1.0f;
@@ -879,7 +881,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 144;
             xSpeed		= ((float)(rand()%40-20)/40);
             ySpeed		= float(rand()%10+40)/5;
-            Lebensdauer = float(150/*162/*180*/ + rand()%10);
+            Lebensdauer = float(180 + rand()%10);
             PartikelArt = ROCKETSMOKE;
 
         }
@@ -953,7 +955,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 ySpeed /= 2.0f;
             }
 
-            Lebensdauer = 48;//54;//60;
+            Lebensdauer = 60;
             RemoveWhenOffScreen = false;
         }
         break;
@@ -1119,9 +1121,9 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             }
 
             if (rand()%2 == 0)
-                Lebensdauer = (float)(rand()%128 + 103/*115/*128*/);
+                Lebensdauer = (float)(rand()%128 + 128);
             else
-                Lebensdauer = (float)(rand()%32 + 179/*202/*224*/);
+                Lebensdauer = (float)(rand()%32 + 224);
 
             AnimSpeed = (float)(rand()%20 + 30);
             AnimCount = (float)(rand()%25 + 5) / 10.0f;
@@ -1149,9 +1151,9 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             }
 
             if (rand()%2 == 0)
-                Lebensdauer = (float)(rand()%128 + 103/*115/*128*/);
+                Lebensdauer = (float)(rand()%128 + 128);
             else
-                Lebensdauer = (float)(rand()%32 + 179/*202/*224*/);
+                Lebensdauer = (float)(rand()%32 + 224);
 
             AnimSpeed = (float)(rand()%15 + 25);
             AnimCount = (float)(rand()%25 + 5) / 8.0f;
@@ -1296,7 +1298,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             xSpeed		= ((float)(rand()%60-30)/10);
             ySpeed		= ((float)(rand()%60-30)/10);
 
-            Lebensdauer = 144;//162;//180;
+            Lebensdauer = 180;
             BounceWalls = false;
         }
         break;
@@ -1310,7 +1312,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= ((float)(rand()%20-10)/20);
 
             AnimCount   = 30.0f;
-            Lebensdauer = 112.0f;//126;//140;
+            Lebensdauer = 140;
             BounceWalls = false;
 
             OwnDraw		= true;	// eigene Draw-Routine, da er die Größe �ndert
@@ -1373,7 +1375,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			xSpeed		= sin_deg(arc) * mul;
 			ySpeed		= cos_deg(arc) * mul;
 
-            Lebensdauer = float (rand()%200 + 44/*50/*55*/);
+            Lebensdauer = float (rand()%200 + 55);
         }
         break;
 
@@ -1394,7 +1396,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
             Rotate = true;
             RotDir = (float)(rand()%10 + 15);
-            Lebensdauer = float (rand()%200 + 44/*50/*55*/);
+            Lebensdauer = float (rand()%200 + 55);
         }
         break;
 
@@ -1422,7 +1424,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= ((float)(rand()%60-30)/20);
             yAcc		= 0.5f;
 
-            Lebensdauer = 112;//126;//140;
+            Lebensdauer = 140;
             BounceWalls = false;
             Rotate = true;
 
@@ -1452,7 +1454,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= ((float)(rand()%60-10)/20);
             yAcc		= 0.5f;
 
-            Lebensdauer = 60;//68;//75;
+            Lebensdauer = 75;
             Rotate = true;
 
         }
@@ -1483,7 +1485,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             yAcc		= 1.0f;
 
             BounceWalls = true;
-            Lebensdauer = 60;//68;//75;
+            Lebensdauer = 75;
             PartikelArt = WATERFLUSH;
             Rotate = true;
 
@@ -1513,7 +1515,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= -((float)(rand()%100+100)/5.0f);
             yAcc		= 4.0f;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
             PartikelArt = SNOWFLUSH;
             Rotate = true;
 
@@ -1543,7 +1545,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= -((float)(rand()%50+50)/3.0f);
             yAcc		= 6.0f;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
             PartikelArt = SNOWFLUSH;
             Rotate = true;
 
@@ -1640,7 +1642,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 150;
             xSpeed		= ((float)(rand()%40-20)*0.025f);
             ySpeed		= -(float)(rand()%40-20)*0.025f;
-            Lebensdauer = 160;//180;//200;
+            Lebensdauer = 200;
 
         }
         break;
@@ -1652,7 +1654,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 128;
             xSpeed		= - (8.0f + ((float)(rand()%20)/10));
             ySpeed		= 15.0f;
-            Lebensdauer = float(120/*135/*150*/ + rand()%10); // PSVITA TWEAK
+            Lebensdauer = float(150 + rand()%10);
 
             AnimSpeed = 0.8f;
             //DKS - off-by-one error:
@@ -1671,7 +1673,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 128;
             xSpeed		= 8.0f + ((float)(rand()%20)/10);
             ySpeed		= 15.0f;
-            Lebensdauer = float(120/*135/*150*/ + rand()%10); // PSVITA TWEAK
+            Lebensdauer = float(150 + rand()%10);
 
             AnimSpeed = 0.8f;
             //DKS - off-by-one error:
@@ -1688,7 +1690,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //red	= 255; green = 255; blue = 255;
             alpha = 128;
             ySpeed		= 15.0f + ((float)(rand()%20)/5);
-            Lebensdauer = float(120/*135/*150*/ + rand()%10); // PSVITA TWEAK
+            Lebensdauer = float(150 + rand()%10);
 
             AnimSpeed = 0.8f;
             //DKS - off-by-one error:
@@ -1898,7 +1900,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 255;
             alpha = 128;
             ySpeed		= 8.0f + ((float)(rand()%20)/10);
-            Lebensdauer = float(120/*135/*150*/ + rand()%10);
+            Lebensdauer = float(150 + rand()%10);
 
             BounceWalls = true;
         }
@@ -1911,7 +1913,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 255;
             alpha = 128;
 
-            Lebensdauer = 103;//115;//128;
+            Lebensdauer = 128;
             ySpeed	    = - float(rand()%10 + 2) / 2.0f;
             xSpeed	    =   float(rand()%20 - 10) / 2.0f;
             yAcc		= 4.0f;
@@ -1959,7 +1961,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 64;
             blue = 64;
             alpha = 255;
-            Lebensdauer = 154.0f;//172.0f;//192.0f;
+            Lebensdauer = 192.0f;
             PartikelArt = LASERFLAME;
 
         }
@@ -1986,7 +1988,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = int (blue / 2);
 
             alpha = 128;
-            Lebensdauer = 103.0f;//115.0f;//128.0f;
+            Lebensdauer = 128.0f;
 
             // Offset zum Spieler merken
             xSpeed = m_pParent->xpos - xPos;
@@ -2027,7 +2029,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 224;
             blue = 192;
             alpha = 192;
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
             BounceWalls = false;
 
             ySpeed = 2.0f;
@@ -2057,7 +2059,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 224;
             blue = 112;
             alpha = 192;
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
         }
         break;
 
@@ -2067,7 +2069,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 128;
             blue = 255;
             alpha = 192;
-            Lebensdauer = 154;//172;//192;
+            Lebensdauer = 192;
         }
         break;
 
@@ -2244,7 +2246,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - now redundant:
             //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 120;//135;//150;
+            Lebensdauer = 150;
             AnimEnde	= 17;
             AnimPhase	= 5;
             AnimSpeed	= 3.0f;
@@ -2522,9 +2524,10 @@ void PartikelClass::Run(void)
 
 		   // PSVITA TWEAK
 		   // Smoke bursting to every direction when enemy explodes.
+		   // This smoke can't be batch drawn atm because it's not sequental.
 		   // Vita will happily do without this.
            //if (AnimCount == 0.0f)
-           //     PartikelSystem.PushPartikel(xPos - 12, yPos - 14, SMOKE);
+           //    PartikelSystem.PushPartikel(xPos - 12, yPos - 14, SMOKE);
 
         }
         break;
@@ -2688,7 +2691,7 @@ void PartikelClass::Run(void)
 
         case SPAWNDROP :				// Wassertropfen aus dem Spawner
         {
-			// PSVITA TWEAK
+			// PSVITA TWEAK / BUF FIX
 			// In certain places these raindrops can fall off the screen leaving their lifespan always positive.
 			// When this happens the objects are never deleted from the pool, preventing new particles to enter.
 			// The performance takes a severe hit when pool is constantly full of objects to render.
@@ -3016,9 +3019,11 @@ void PartikelClass::Run(void)
                 Lebensdauer = 0;
 
                 // Ein paar Spritzer erzeugen
-                if (options_Detail >= DETAIL_HIGH)
-                    for (int i=0; i<2; i++)
-                        PartikelSystem.PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
+                if (options_Detail >= DETAIL_HIGH){
+                    //for (int i=0; i<2; i++)
+                    PartikelSystem.PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
+					PartikelSystem.PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
+				}
             }
 
         }
@@ -3190,7 +3195,7 @@ void PartikelClass::Run(void)
 
         case WATERFLUSH:
         {
-            Lebensdauer -= 2.5f/*1.5f*/ SYNC; // PSVITA TWEAK
+            Lebensdauer -= 2.5f/*1.5f*/ SYNC; //PSVITA TWEAK
 
             // Im Wasser gelandet ?
             if (TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID    ||
@@ -3687,8 +3692,7 @@ bool PartikelClass::Render(void)
         load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
 #endif
-    }
-    else
+	}else{
 
         // Partikel nicht rotieren?
         if (Rotate == false &&
@@ -3709,6 +3713,7 @@ bool PartikelClass::Render(void)
 #endif
 #endif
         }
+	}
 
     // Normaler Partikel (aus Grafik) zeichnen
     //DKS - Added a check to ensure we never draw without a valid animation phase, to ensure
@@ -3923,6 +3928,69 @@ bool PartikelClass::Render(void)
 
     return true;
 }
+
+
+void PartikelClass::GetTriangles(VERTEX2D* vertices)
+{
+	if (alpha < 0)
+		alpha = 0;
+
+    float l,  r,  o,  u;					// Vertice Koordinaten
+    float tl, tr, to, tu;					// Textur Koordinaten
+    float xts = PartikelGrafix[PartikelArt].itsXTexScale;
+    float yts = PartikelGrafix[PartikelArt].itsYTexScale;
+
+    RECT &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
+
+    l = float(-TileEngine.XOffset+xPos-0.5f);								// Links
+    r = float(-TileEngine.XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
+    o = float(-TileEngine.YOffset+yPos-0.5f);								// Oben
+    u = float(-TileEngine.YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
+
+    tl = Rect.left   * xts;	// Links
+    tr = Rect.right  * xts;	// Rechts
+    to = Rect.top    * yts;	// Oben
+    tu = Rect.bottom * yts;	// Unten
+
+	vertices[0].color = vertices[1].color = 
+						vertices[2].color = 
+						vertices[3].color = 
+						vertices[4].color = 
+						vertices[5].color = D3DCOLOR_RGBA(red, green, blue, alpha);
+
+	// First triangle
+	vertices[0].x		= l;		// Links oben
+	vertices[0].y		= o;
+	vertices[0].tu		= tl;
+	vertices[0].tv		= to;
+
+	vertices[1].x		= r;		// Rechts oben
+	vertices[1].y		= o;
+	vertices[1].tu		= tr;
+	vertices[1].tv		= to;
+
+	vertices[2].x		= l;		// Links unten
+	vertices[2].y		= u;
+	vertices[2].tu		= tl;
+	vertices[2].tv		= tu;
+
+	// Second triangle
+	vertices[3].x		= l;		// Links unten
+	vertices[3].y		= u;
+	vertices[3].tu		= tl;
+	vertices[3].tv		= tu;
+
+	vertices[4].x		= r;		// Rechts oben
+	vertices[4].y		= o;
+	vertices[4].tu		= tr;
+	vertices[4].tv		= to;
+
+	vertices[5].x		= r;		// Rechts unten
+	vertices[5].y		= u;
+	vertices[5].tu		= tr;
+	vertices[5].tv		= tu;
+}
+
 
 // --------------------------------------------------------------------------------------
 // PartikelsystemKlasse Funktionen
@@ -4761,6 +4829,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
     return true;
 }
 #endif //0
+
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
 {
     if (NumPartikel >= MAX_PARTIKEL)			// Grenze überschritten ?
@@ -4924,16 +4993,6 @@ int PartikelsystemClass::GetNumPartikel(void)
     return NumPartikel;
 }
 
-int PartikelsystemClass::GetMaxPartikel(void)
-{
-    return MAX_PARTIKEL;
-}
-
-int PartikelsystemClass::GetSpacePartikel(void)
-{
-	return MAX_PARTIKEL - NumPartikel;
-}
-
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste nur anzeigen
 // --------------------------------------------------------------------------------------
@@ -5066,6 +5125,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 #endif
 }
 #endif //0
+
 void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 {
     if (Console.Showing == true)
@@ -5242,10 +5302,59 @@ void PartikelsystemClass::DoPartikel(void)
 #endif
 }
 #endif //0
+
+
+
+inline int PartikelsystemClass::getAdjacentCount(PartikelClass* node)
+{
+	/* 
+	 Return number of matching adjacent elements for batch draw.
+	 Matching criteria:
+	 -Same texture as the previous node.
+	 -Non-rotating particle.
+	 -Not included in the OwnDraw-list.
+	 -Draw mode is MODE_NORMAL
+	 */
+
+
+	if (!node)
+		return 0;
+
+	int count = 1;
+	int particle_art = node->PartikelArt;
+	node = node->pNext;
+
+	while(node){
+
+		if (particle_art != node->PartikelArt)
+			break;
+
+		if (node->OwnDraw)
+			break;
+
+		if (node->Rotate)
+			break;
+
+		if (DrawMode != MODE_NORMAL)
+			break;
+
+		count++;
+		node = node->pNext;
+	}
+
+	return count;
+}
+
 void PartikelsystemClass::DoPartikel(void)
 {
-
-    if (Console.Showing == true)
+	// PSVITA TWEAK
+	// This one fix single handedly made the Vita port possible.
+	// Batch drawing particles with same texture brings tremendous performance boost.
+	// Calls to openGL are almost halved in many cases. Level 7 became instantly playable with
+	// fps shooting from 5 to 60. Same thing with the wind storm in level 6. 
+	// Also Hurri's spreadshot gun doesn't dip the fps anymore. 
+   
+	if (Console.Showing == true)
     {
         DrawOnly();
         return;
@@ -5255,77 +5364,186 @@ void PartikelsystemClass::DoPartikel(void)
     PartikelClass *pPrev = NULL;
 	CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
 	DrawMode = MODE_NORMAL;
-
-//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
+	static VERTEX2D vertices[3000*6];		// Vertex array for batch draw
+	//renderCallCount = 0;					// For testing draw call counts
+		
+	//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
     DirectGraphics.SetColorKeyMode();
-    while (pCurr != NULL)
+    
+	while (pCurr != NULL)
     {
-        if (pCurr->PartikelArt < ADDITIV_GRENZE)
-        {
-            pCurr->Run();		// Partikel animieren/bewegen
+		if (pCurr->PartikelArt < ADDITIV_GRENZE)
+		{
+			int adjacent_nodes = getAdjacentCount(pCurr);
 
-            if (pCurr->Lebensdauer > 0.0f) { 	// ggf Partikel löschen (bei Lebensdauer == 0)
-                //DKS - Only render if Lebensdauer > 0.0f:
-                pCurr->Render();
-            }
-        }
+			if (adjacent_nodes == 1){
+				// Single draw call.
 
-        if (pCurr->Lebensdauer > 0.0f) { 	// ggf Partikel löschen (bei Lebensdauer == 0)
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr) {
-                pEnd = pPrev;
-            }
-            pCurr = DelNode(pCurr);
-            //pCurr now points to the node after the one deleted
+				pCurr->Run();
 
-            if (pPrev) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
+				if (pCurr->Lebensdauer > 0.0f){
+					pCurr->Render();
+					//renderCallCount++;
+
+					pPrev = pCurr;
+					pCurr = pCurr->pNext;	
+				} else {
+					// Particle's time to die..
+					// If this is the last node in the list, update the main class's pEnd pointer
+					if (pEnd == pCurr) {
+						pEnd = pPrev;
+					}
+					pCurr = DelNode(pCurr);
+					//pCurr now points to the node after the one deleted
+
+					if (pPrev) {
+						// This is not the first node in the list, so
+						// splice this node onto the previous one
+						pPrev->pNext = pCurr;
+					}
+				}
+
+			}else {
+				// Batch draw call.
+				int ind = 0;
+				int tex_id = PartikelGrafix[pCurr->PartikelArt].itsTexIdx;
+				int particle_art = pCurr->PartikelArt;
+
+				for (int i=0; i<adjacent_nodes; ++i){
+
+					pCurr->Run();		
+
+					if (pCurr->Lebensdauer > 0.0f) {
+						if (pCurr->AnimPhase <= pCurr->AnimEnde){
+							pCurr->GetTriangles(&vertices[ind]);
+							ind += 6;
+						}
+
+						pPrev = pCurr;
+						pCurr = pCurr->pNext;
+					}else{
+						// Particle's time to die..
+						// If this is the last node in the list, update the main class's pEnd pointer
+						if (pEnd == pCurr) {
+							pEnd = pPrev;
+						}
+						pCurr = DelNode(pCurr);
+						//pCurr now points to the node after the one deleted
+
+						if (pPrev) {
+							// This is not the first node in the list, so
+							// splice this node onto the previous one
+							pPrev->pNext = pCurr;
+						}
+					}
+				}
+
+				if (ind > 0){
+					if (particle_art != CurrentPartikelTexture)
+					{
+						DirectGraphics.SetTexture(tex_id);
+						CurrentPartikelTexture = particle_art;
+					}
+					DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, ind/3, &vertices[0]);
+					//renderCallCount++;
+				}
+			}
+		}
+		else{
+			pPrev = pCurr;
+			pCurr = pCurr->pNext;
+		}
+    } // while
 
     pCurr = pStart;
     pPrev = NULL;
 	CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
 	DirectGraphics.SetAdditiveMode();
+	int adjacent_nodes = 1;
 
     while (pCurr != NULL)
     {
-        if (pCurr->PartikelArt >= ADDITIV_GRENZE)
-        {
-            pCurr->Run();
-            if (pCurr->Lebensdauer > 0.0f)
-                pCurr->Render();
-        }
+		if (pCurr->PartikelArt >= ADDITIV_GRENZE)
+		{
+			adjacent_nodes = getAdjacentCount(pCurr);
 
+			if (adjacent_nodes == 1){
+				// Single draw call.
 
-        if (pCurr->Lebensdauer > 0.0f) { 	
-            pPrev = pCurr;
-            pCurr = pCurr->pNext;
-        } else {
-            // Particle's time to die..
+				pCurr->Run();
 
-            // If this is the last node in the list, update the main class's pEnd pointer
-            if (pEnd == pCurr) {
-                pEnd = pPrev;
-            }
-            pCurr = DelNode(pCurr);
-            //pCurr now points to the node after the one deleted
+				if (pCurr->Lebensdauer > 0.0f){
+					pCurr->Render();
+					//renderCallCount++;
 
-            if (pPrev != NULL) {
-                // This is not the first node in the list, so
-                // splice this node onto the previous one
-                pPrev->pNext = pCurr;
-            }
-        }
-    }
+					pPrev = pCurr;
+					pCurr = pCurr->pNext;	
+				} else {
+
+					// Particle's time to die..
+					// If this is the last node in the list, update the main class's pEnd pointer
+					if (pEnd == pCurr) {
+						pEnd = pPrev;
+					}
+					pCurr = DelNode(pCurr);
+					//pCurr now points to the node after the one deleted
+
+					if (pPrev) {
+						// This is not the first node in the list, so
+						// splice this node onto the previous one
+						pPrev->pNext = pCurr;
+					}
+				}
+
+			}else{
+				// Batch draw call.
+				int tex_id = PartikelGrafix[pCurr->PartikelArt].itsTexIdx;
+				int particle_art = pCurr->PartikelArt;
+				int ind_gen = 0;
+
+				for (int i=0; i<adjacent_nodes; ++i){
+
+					pCurr->Run();		
+
+					if (pCurr->Lebensdauer > 0.0f) { 
+						if (pCurr->AnimPhase <= pCurr->AnimEnde){
+							pCurr->GetTriangles(&vertices[ind_gen]);
+							ind_gen += 6;
+						}
+
+						pPrev = pCurr;
+						pCurr = pCurr->pNext;
+						
+					}else{
+					
+						if (pEnd == pCurr) {
+							pEnd = pPrev;
+						}
+						pCurr = DelNode(pCurr);
+						
+						if (pPrev) {
+							pPrev->pNext = pCurr;
+						}
+					}
+				}
+
+				if (ind_gen > 0){
+					if (particle_art != CurrentPartikelTexture)
+					{
+						DirectGraphics.SetTexture(tex_id);
+						CurrentPartikelTexture = particle_art;
+					}
+					DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, ind_gen/3, &vertices[0]);
+					//renderCallCount++;
+				}
+			}
+
+		}else{
+			pPrev = pCurr;
+			pCurr = pCurr->pNext;
+		}
+    } // while
 
 	DirectGraphics.SetColorKeyMode();
 	// Normale Projektions-Matrix wieder herstellen
@@ -5419,16 +5637,16 @@ void PartikelsystemClass::SetParticleCount(void)
 #ifdef PSVITA
 	// Lower the limits to give Vita a chance.
 	 case DETAIL_LOW:
-        MAX_PARTIKEL = 350;
+        MAX_PARTIKEL = 750;
         break;
     case DETAIL_MEDIUM:
-        MAX_PARTIKEL = 700;
-        break;
-    case DETAIL_HIGH:
         MAX_PARTIKEL = 1500;
         break;
+    case DETAIL_HIGH:
+        MAX_PARTIKEL = 2500;
+        break;
     case DETAIL_MAXIMUM:
-        MAX_PARTIKEL = 3000;
+        MAX_PARTIKEL = 3500;
         break;
     }
 #else

@@ -2136,8 +2136,8 @@ void TileEngineClass::DrawWater(void)
     }
 
 	// PSVITA TWEAK: 
-	// Waterfalls brings vita to it's knees. Instead of drawing each individual quad, we
-	// describe each quad by 6 vertices (two triangles) and batch call everything in one triangle list.
+	// Waterfalls brings Vita to it's knees. Instead of drawing each individual quad, we
+	// describe each quad by 6 vertices (two triangles) and batch draw everything in one triangle list.
 	// Gives much better performance. All quads have the same texture so we are lucky.
 	
 	// First don't even bother if this level has no waterfall.
@@ -2173,7 +2173,7 @@ void TileEngineClass::DrawWater(void)
                     int yoff = (j+yLevel) % 3 * TILESIZE_Y + 120 - int (WasserfallOffset);
 
                     Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
-                    Wasserfall[0].PrepareSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col1, &wf1_tiles[k]);
+                    Wasserfall[0].GetSpriteTriangles((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), -1, Col1, &wf1_tiles[k]);
 					k += 6;
 					//Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col1);
 
@@ -2182,7 +2182,7 @@ void TileEngineClass::DrawWater(void)
                     xoff = (i+xLevel+1) % 3 * TILESIZE_X;
                     yoff = (j+yLevel)   % 3 * TILESIZE_Y + 120 - int (WasserfallOffset / 2.0f);
                     Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
-                    Wasserfall[0].PrepareSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col2, &wf1_tiles[k]);
+                    Wasserfall[0].GetSpriteTriangles((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), -1, Col2, &wf1_tiles[k]);
 					//Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col2);
 					k += 6;
 
@@ -2193,9 +2193,11 @@ void TileEngineClass::DrawWater(void)
                                            (i*TILESIZE_X-xTileOffs)%640+TILESIZE_X,
                                            (j*TILESIZE_Y-yTileOffs)%480+TILESIZE_Y);
 
-					Wasserfall[1].PrepareSprite((float)(i*TILESIZE_X-xTileOffs),
+					Wasserfall[1].GetSpriteTriangles((float)(i*TILESIZE_X-xTileOffs),
                                                (float)(j*TILESIZE_Y-yTileOffs),
-                                               D3DCOLOR_RGBA (180, 240, 255, 60), &wf2_tiles[k2]);
+											   -1,
+                                               D3DCOLOR_RGBA (180, 240, 255, 60), 
+											   &wf2_tiles[k2]);
 
 					k2 += 6;
                    /* Wasserfall[1].RenderSprite((float)(i*TILESIZE_X-xTileOffs),

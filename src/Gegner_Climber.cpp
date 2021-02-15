@@ -313,7 +313,7 @@ void GegnerClimber::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 10; i++)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%30, SPIDERSPLITTER);
         PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%30, FUNKE);

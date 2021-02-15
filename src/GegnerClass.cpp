@@ -118,10 +118,11 @@ void GegnerClass::Render(void)
 
             //DKS - Adapted to new TexturesystemClass
             //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
-            if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
+            if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1){
                 pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
                                                        (float)(yPos-TileEngine.YOffset),
                                                        Anim, Color, mirrored);
+			}
         }
         // DAS ist die Extrawurst =)
         else if (OwnDraw == true)
@@ -153,8 +154,10 @@ void GegnerClass::Render(void)
                         //DKS - TODO: I didn't really find it necessary to draw the
                         //      sprite atop itself additively twice here, after experimenting.
                         //      I've left it as it was originally for now, however:
-                        for (int i = 0; i < 2; i++)
-                            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                        //for (int i = 0; i < 2; i++)
+						// PSVITA TWEAK
+						// Draw only once
+                        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
                                                                    (float)(yPos-TileEngine.YOffset),
                                                                    Anim, Color, mirrored);
                 }
@@ -164,7 +167,9 @@ void GegnerClass::Render(void)
                     //DKS - TODO: I didn't really find it necessary to draw the
                     //      sprite atop itself additively twice here, after experimenting.
                     //      I've left it as it was originally for now, however:
-                    for (int i = 0; i < 2; i++)
+                    //for (int i = 0; i < 2; i++)
+					// PSVITA TWEAK
+					// Draw only once
                         DoDraw();
 
                 DirectGraphics.SetColorKeyMode();

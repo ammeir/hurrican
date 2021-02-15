@@ -1551,10 +1551,10 @@ bool Heartbeat(void)
         ShowFPS();
 
     // GUI abhandeln
-    GUI.Run(); // PSVITA
+    GUI.Run();
 
     // Konsole abhandeln
-    //Console.DoConsole(); // PSVITA
+    //Console.DoConsole(); // PSVITA TWEAK
 
 jump:
 

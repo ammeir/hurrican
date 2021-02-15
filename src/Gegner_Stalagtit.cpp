@@ -83,13 +83,19 @@ void GegnerStalagtit::GegnerExplode(void)
 {
 	// und Splitter erzeugen Rauch
 
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 32? 16: free_space_particles>>1; // PSVITA TWEAK
-    for (int i=0; i<size/*20*/; i++)
+    /*for (int i=0; i<20; i++)
     {
         PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, SMOKE);
         PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, ROCKSPLITTERSMALLBLUE);
-    }
+    }*/
+
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 20; ++i)
+		PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, SMOKE);
+	for (int i=0; i< 20; ++i)
+		PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, ROCKSPLITTERSMALLBLUE);
+
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
     Player[0].Score += 100;

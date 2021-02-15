@@ -106,7 +106,7 @@ void GegnerSchwabbel::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
 	float _yPos = yPos - 10;
-    for (int i=0; i < 40/*80*/; ++i) // PSVITA TWEAK
+    for (int i=0; i < 80; ++i)
         PartikelSystem.PushPartikel (xPos + rand ()%40, _yPos + rand()%60, MADEBLUT);
 
     for (int i=0; i < 30; ++i)

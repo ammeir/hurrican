@@ -31,11 +31,8 @@ Start = main menu
 
 For a debug version replace Release with Debug.
 
-### Performance 
-This port needs a lot more optimization. Vita struggles when there are lots of particles in the air and in certain boss fights. But you can get a decent performance if you set the detail level to low/medium.
-
 ### Known issues
--Frame drops in some parts of the game  
+-Frame drops in some parts of the game (e.g near waterfalls and with certain boss fights)
 -Gaps between background tiles are sometimes visible, especially in level 7
 
 

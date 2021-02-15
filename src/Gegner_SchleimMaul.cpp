@@ -112,7 +112,7 @@ void GegnerSchleimMaul::GegnerExplode(void)
 {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
-    for (int i = 0; i < 13/*16*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 16; i++)
         PartikelSystem.PushPartikel(xPos + 15 + rand ()% 20,
                                       yPos + 15 + rand ()% 20, SCHLEIM2);
 

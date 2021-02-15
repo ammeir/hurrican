@@ -101,10 +101,10 @@ void GegnerPflanze::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
-    for (int i = 0; i < 4/*5*/; ++i) // PSVITA TWEAK
+    for (int i = 0; i < 5; ++i)
         PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%40, EXPLOSION_GREEN);
 
-    for (int i = 0; i < 24/*30*/; ++i) // PSVITA TWEAK
+    for (int i = 0; i < 30; ++i)
         // Bl�tter erzeugen
         PartikelSystem.PushPartikel(float(xPos + rand()%100),
                                       float(yPos + 10 +  rand()%50), BLATT);

@@ -105,7 +105,7 @@ void GegnerSwimWalker::GegnerExplode(void)
 
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i<24/*30*/; ++i) // PSVITA TWEAK
+    for (int i=0; i<30; ++i)
     {
         PartikelSystem.PushPartikel(xPos - 10 + rand()%85, yPos - 10 + rand()%65, BUBBLE);
     }

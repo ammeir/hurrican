@@ -83,7 +83,7 @@ int psvInit()
 int8_t EGL_Open(uint16_t width, uint16_t height, uint16_t depth, int vsync)
 {
 	/* Initialize openGL and the window surface */
-	vglInitExtended(DISPLAY_WIDTH, DISPLAY_HEIGHT, 0x800000, SCE_GXM_MULTISAMPLE_4X);
+	vglInitExtended(0, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0x800000, SCE_GXM_MULTISAMPLE_4X);
 	return 0;
 }
 

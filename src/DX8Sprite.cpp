@@ -493,15 +493,17 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
     return true;
 }
 
-// --------------------------------------------------------------------------------------
-// Sprite ganz normal zeichnen mit aktuellem Surfaceausschnitt und Colorkey
-// --------------------------------------------------------------------------------------
-void DirectGraphicsSprite::PrepareSprite(float x, float y, D3DCOLOR Color, VERTEX2D* TriangleStrip)
+void DirectGraphicsSprite::GetSpriteTriangles(float x, float y, int Anim, D3DCOLOR Color, VERTEX2D* TriangleStrip)
 {
-	// Returns a quad in 6 vertices.
+	// Returns a quad in 6 vertices to be used in triangle list render.
 
 	float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
+
+	Anim %= 255;
+
+	if (Anim > -1)
+		itsRect = itsPreCalcedRects [Anim];
 
     l = x;									// Links
     r = x+(itsRect.right-itsRect.left-1);	// Rechts
@@ -556,6 +558,127 @@ void DirectGraphicsSprite::PrepareSprite(float x, float y, D3DCOLOR Color, VERTE
     TriangleStrip[5].tu		= tr;
     TriangleStrip[5].tv		= tu;
 }
+
+void DirectGraphicsSprite::GetScaledSpriteTriangles(float x, float y, int width, int height, D3DCOLOR Color, VERTEX2D* TriangleStrip)
+{
+	// Returns a quad in 6 vertices to be used in triangle list render.
+
+	float l,  r,  o,  u;					// Vertice Koordinaten
+    float tl, tr, to, tu;					// Textur Koordinaten
+
+    l = x;			// Links
+    r = x+width;	// Rechts
+    o = y;			// Oben
+    u = y+height;	// Unten
+
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
+
+    tl = itsRect.left   * itsXTexScale;	// Links
+    tr = itsRect.right  * itsXTexScale;	// Rechts
+    to = itsRect.top    * itsYTexScale;	// Oben
+    tu = itsRect.bottom * itsYTexScale;	// Unten
+
+    TriangleStrip[0].color = TriangleStrip[1].color = 
+		                     TriangleStrip[2].color = 
+							 TriangleStrip[3].color = 
+							 TriangleStrip[4].color = 
+							 TriangleStrip[5].color = Color;
+
+	// First triangle
+    TriangleStrip[0].x		= l;		// Links oben
+    TriangleStrip[0].y		= o;
+    TriangleStrip[0].tu		= tl;
+    TriangleStrip[0].tv		= to;
+
+    TriangleStrip[1].x		= r;		// Rechts oben
+    TriangleStrip[1].y		= o;
+    TriangleStrip[1].tu		= tr;
+    TriangleStrip[1].tv		= to;
+
+    TriangleStrip[2].x		= l;		// Links unten
+    TriangleStrip[2].y		= u;
+    TriangleStrip[2].tu		= tl;
+    TriangleStrip[2].tv		= tu;
+
+	// Second triangle
+	TriangleStrip[3].x		= l;		// Links unten
+    TriangleStrip[3].y		= u;
+    TriangleStrip[3].tu		= tl;
+    TriangleStrip[3].tv		= tu;
+
+	TriangleStrip[4].x		= r;		// Rechts oben
+    TriangleStrip[4].y		= o;
+    TriangleStrip[4].tu		= tr;
+    TriangleStrip[4].tv		= to;
+
+    TriangleStrip[5].x		= r;		// Rechts unten
+    TriangleStrip[5].y		= u;
+    TriangleStrip[5].tu		= tr;
+    TriangleStrip[5].tv		= tu;
+}
+
+void DirectGraphicsSprite::GetScaledSpriteAnimTriangles(float x, float y, int width, int height, int Anim, D3DCOLOR Color, VERTEX2D* TriangleStrip)
+{
+	float l,  r,  o,  u;					// Vertice Koordinaten
+    float tl, tr, to, tu;					// Textur Koordinaten
+
+    l = x;			// Links
+    r = x+width;	// Rechts
+    o = y;			// Oben
+    u = y+height;	// Unten
+
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
+
+    tl = ((Anim%itsXFrameCount) * itsXFrameSize)                 * itsXTexScale; // Links
+    tr = ((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale; // Rechts
+    to = ((Anim/itsXFrameCount) * itsYFrameSize)                 * itsYTexScale; // Oben
+    tu = ((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale; // Unten
+
+    TriangleStrip[0].color = TriangleStrip[1].color = 
+		                     TriangleStrip[2].color = 
+							 TriangleStrip[3].color = 
+							 TriangleStrip[4].color = 
+							 TriangleStrip[5].color = Color;
+
+	// First triangle
+    TriangleStrip[0].x		= l;		// Links oben
+    TriangleStrip[0].y		= o;
+    TriangleStrip[0].tu		= tl;
+    TriangleStrip[0].tv		= to;
+
+    TriangleStrip[1].x		= r;		// Rechts oben
+    TriangleStrip[1].y		= o;
+    TriangleStrip[1].tu		= tr;
+    TriangleStrip[1].tv		= to;
+
+    TriangleStrip[2].x		= l;		// Links unten
+    TriangleStrip[2].y		= u;
+    TriangleStrip[2].tu		= tl;
+    TriangleStrip[2].tv		= tu;
+
+	// Second triangle
+	TriangleStrip[3].x		= l;		// Links unten
+    TriangleStrip[3].y		= u;
+    TriangleStrip[3].tu		= tl;
+    TriangleStrip[3].tv		= tu;
+
+	TriangleStrip[4].x		= r;		// Rechts oben
+    TriangleStrip[4].y		= o;
+    TriangleStrip[4].tu		= tr;
+    TriangleStrip[4].tv		= to;
+
+    TriangleStrip[5].x		= r;		// Rechts unten
+    TriangleStrip[5].y		= u;
+    TriangleStrip[5].tu		= tr;
+    TriangleStrip[5].tv		= tu;
+}
+
 
 void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 {

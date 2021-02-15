@@ -121,14 +121,10 @@ void GegnerStachelbeere::DoKI(void)
             // Partikel erzeugen
             //int i = 0;
 
-			int free_space_particles = PartikelSystem.GetSpacePartikel();
-			int size = free_space_particles > 10? 10: free_space_particles;
-            for (int i = 0; i < size/*10*/; ++i)
+            for (int i = 0; i < 10; ++i)
                 PartikelSystem.PushPartikel(xPos + rand()%60, yPos + 50, FUNKE);
 
-			free_space_particles = PartikelSystem.GetSpacePartikel();
-			size = free_space_particles > 5? 5: free_space_particles;
-            for (int i = 0; i < size/*5*/; ++i)
+            for (int i = 0; i < 5; ++i)
                 PartikelSystem.PushPartikel(xPos + rand()%40, yPos + 40, SMOKE);
 
             // Geschwindigkeit umdrehen
@@ -311,7 +307,7 @@ void GegnerStachelbeere::DoKI(void)
 
 void GegnerStachelbeere::GegnerExplode(void)
 {
-    for (int i = 0; i < 4/*5*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 30 + rand()%60),
                                       float(yPos - 30 + rand()%60), EXPLOSION_MEDIUM2);
 

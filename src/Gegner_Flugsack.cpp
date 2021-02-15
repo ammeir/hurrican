@@ -175,10 +175,10 @@ void GegnerFlugsack::DoKI(void)
 void GegnerFlugsack::GegnerExplode(void)
 {
 
-    for (int i=0; i<8/*10*/; i++) // PSVITA TWEAK
+    for (int i=0; i<10; i++)
         PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i<4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i<5; i++)
         PartikelSystem.PushPartikel(xPos+rand()%40+20, yPos+rand()%30+20, SPLITTER);
 
     SoundManager.PlayWave(75, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben

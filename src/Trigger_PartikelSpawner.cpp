@@ -124,7 +124,7 @@ void GegnerPartikelSpawner::DoKI(void)
             case 1 :
             {
                 PartikelSystem.PushPartikel(xPos-320 + rand()%640 , (float)(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
-                AnimCount = 1.0f/*0.5f*/; // PSVITA TWEAK
+                AnimCount = 0.5f;
             }
             break;
 
@@ -303,7 +303,7 @@ void GegnerPartikelSpawner::DoKI(void)
 
                     PartikelSystem.PushPartikel(xPos, yPos-24, LASERFLAME);
 
-                    for (int i=0; i<8/*10*/; ++i) // PSVITA TWEAK
+                    for (int i=0; i<10; ++i)
                     {
                         PartikelSystem.PushPartikel(xPos+19, yPos, FUNKE);
                         PartikelSystem.PushPartikel(xPos+19, yPos, LASERFUNKE2);

@@ -62,7 +62,7 @@ void GegnerBallerdrone::DoKI(void)
 
     if (AnimCount < 0.0f)
     {
-        AnimCount += 0.2f;
+        AnimCount += 0.4f/*0.2f*/;
 
         PartikelSystem.PushPartikel (xPos + 37 + rand()%3, yPos + 35, ROBOMANSMOKE);
     }
@@ -169,13 +169,13 @@ void GegnerBallerdrone::GegnerExplode(void)
 
     int i;
 
-    for (i=0; i < 8/*10*/; ++i) // PSVITA TWEAK
+    for (i=0; i < 10; ++i)
         PartikelSystem.PushPartikel (xPos - 30 + rand ()%90, yPos - 30 + rand()%60, EXPLOSION_MEDIUM2);
 
-    for (i=0; i < 24/*30*/; ++i) // PSVITA TWEAK
+    for (i=0; i < 30; ++i)
         PartikelSystem.PushPartikel (xPos - 40 + rand ()%90, yPos - 30 + rand()%60, SMOKEBIG);
 
-    for (i=0; i < 32/*40*/; ++i) // PSVITA TWEAK
+    for (i=0; i < 40; ++i)
         PartikelSystem.PushPartikel (xPos + rand ()%90, yPos + rand()%60, FUNKE);
 
     Player[0].Score += 300;

@@ -179,9 +179,9 @@ void GegnerSpiderBomb::DoKI(void)
 
 void GegnerSpiderBomb::GegnerExplode(void)
 {
-    ShakeScreen(2/*5*/); // PSVITA TWEAK
+    ShakeScreen(3/*5*/); // PSVITA TWEAK
 
-    for (int i=0; i<5/*6*/; i++) // PSVITA TWEAK
+    for (int i=0; i<6; i++)
         PartikelSystem.PushPartikel(float(xPos - 60 + rand()%80),
                                       float(yPos - 40 + rand()%30), EXPLOSION_MEDIUM2);
 

@@ -99,7 +99,7 @@ void GegnerGeschuetz::GegnerExplode(void)
 
     PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), SMOKEBIG);
 
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(float(xPos + 10 + rand()%40),
                                       float(yPos + rand()%40), LONGFUNKE);
 

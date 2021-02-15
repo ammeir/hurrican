@@ -251,7 +251,7 @@ void PlayerClass::InitPlayer(int player_num)
         SmartBombs = 0;
     }
 
-    GodMode = false;
+    GodMode = true;
     WheelMode = false;
     InitNewLevel();
     AutoScrollspeed = 0.0f;

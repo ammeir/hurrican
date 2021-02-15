@@ -164,12 +164,7 @@
 #define ELEKTROPAMPE			127						// Elektropampe
 #define TURRIEXTRAWURST			128						// Schuss des Golems
 
-#ifdef PSVITA
-// No horse power, draw less.
-#define MAX_SHOTS				500
-#else
 #define MAX_SHOTS				1024					// Maximale Anzahl an Sch�ssen
-#endif
 
 //DKS - This was unnecessarily high. Changed to the correct figure:
 //#define MAX_SHOTGFX			300						// Maximale Anzahl verschiedener Grafiken
@@ -222,7 +217,9 @@ public:
     void Render(void);								// Schuss rendern
     void CheckCollision(void);						// Kollision checken
     void ExplodeShot(void);							// Schuss explodiert und erzeugt Partikel
-    ProjectileClass		*pNext;						// Zeiger auf den n�chsten   Schuss
+    void GetTriangles(VERTEX2D* vertices);
+	
+	ProjectileClass		*pNext;						// Zeiger auf den n�chsten   Schuss
     //DKS - Made a singly-linked list, there's no need or benefit for a doubly-linked list here.
     //ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
     PlayerClass			*pParent;
@@ -285,6 +282,7 @@ public:
     void ClearType	(int type);						// Alle Objekte eines Typs löschen
     int  GetNumProjectiles(void);					// Zahl der Sch�sse zurückliefern
     void DoProjectiles  (void);						// Alle Sch�sse der Liste animieren
+	void BatchRender(void);
 };
 
 // --------------------------------------------------------------------------------------

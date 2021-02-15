@@ -399,31 +399,31 @@ void GegnerTheWall::DoKI(void)
 
         if (SmokeDelay < 0.0f)
         {
-            SmokeDelay = 0.2f;
+            SmokeDelay = 0.6f/*0.2f*/; // PSVITA TWEAK
 
-            if (Energy < 3500)
+            if (Energy < 3000/*3500*/)
                 PartikelSystem.PushPartikel(xPos + 82, yPos + 260, SMOKE3);
 
-            if (Energy < 3000)
+            if (Energy < 2500/*3000*/)
                 PartikelSystem.PushPartikel(xPos + 180, yPos + 250, SMOKE3);
 
-            if (Energy < 2500)
+            if (Energy < 2100/*2500*/)
                 PartikelSystem.PushPartikel(xPos + 110, yPos + 320, SMOKE3);
 
-            if (Energy < 2000)
+            if (Energy < 1700/*2000*/)
                 PartikelSystem.PushPartikel(xPos + 255, yPos + 130, SMOKE3);
 
-            if (Energy < 1500)
+            if (Energy < 1300/*1500*/)
                 if (rand()%20 == 0)
                 {
                     PartikelSystem.PushPartikel(xPos - 10 + rand()%10,
                                                   yPos + 220 + rand()%10, LASERFLAME);
 
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 8/*10*/; ++i)
                         PartikelSystem.PushPartikel(xPos + 10 + rand()%10,
                                                       yPos + 240 + rand()%10, FUNKE);
 
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 8/*10*/; ++i)
                         PartikelSystem.PushPartikel(xPos + 20 + rand()%2,
                                                       yPos + 240 + rand()%10, LASERFUNKE2);
                 }
@@ -692,26 +692,16 @@ void GegnerTheWall::DoKI(void)
             // Tür öffnen Sound anhalten
             SoundManager.StopWave(SOUND_DOOR);
 
-			int free_space_particles = PartikelSystem.GetSpacePartikel();
-			int size = free_space_particles > 28? 28: free_space_particles; // PSVITA TWEAK
-			
-			if(size > 0){
-				float _xPos = xPos + TunnelOffx + 110;
-				float _yPos = yPos + TunnelOffY - 25;
-				for (int i = 0; i < size; i++)
-					PartikelSystem.PushPartikel(_xPos + rand()%30, _yPos + rand()%10 + i * 5, SMOKE);
+			float _xPos = xPos + TunnelOffx + 110;
+			float _yPos = yPos + TunnelOffY - 25;
+			for (int i = 0; i < 28; ++i)
+				PartikelSystem.PushPartikel(_xPos + rand()%30, _yPos + rand()%10 + i * 5, SMOKE);
 
-
-				free_space_particles = PartikelSystem.GetSpacePartikel();
-				size = free_space_particles > 12? 12: free_space_particles; // PSVITA TWEAK
-				if (size > 0){
-					_xPos = xPos + TunnelOffx + 95;
-					_yPos = yPos + TunnelOffY - 25;
-					for (int i = 0; i < size; i++)
-						PartikelSystem.PushPartikel(_xPos + rand()%30, _yPos + rand()%10 + i * 10, SMOKEBIG);
-				}
-			}
-
+			_xPos = xPos + TunnelOffx + 95;
+			_yPos = yPos + TunnelOffY - 25;
+			for (int i = 0; i < 12; i++)
+				PartikelSystem.PushPartikel(_xPos + rand()%30, _yPos + rand()%10 + i * 10, SMOKEBIG);
+				
             Handlung = GEGNER_STEHEN;
             AnimCount = 20.0f;
             OldEnergy = Energy;

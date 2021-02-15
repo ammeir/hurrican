@@ -84,9 +84,9 @@ void GegnerFallBombe::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel (xPos - 40, yPos, EXPLOSION_BIG);
 
-    for (int i = 0; i < 32/*40*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 40; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos + 40 + rand ()%30, FUNKE);
 
-    for (int i = 0; i < 13/*16*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 16; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%30 - 10, yPos + 40 + rand ()%30, SMOKE3);
 }

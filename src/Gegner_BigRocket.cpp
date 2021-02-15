@@ -86,7 +86,7 @@ void GegnerBigRocket::DoKI(void)
 
         if (smokedelay <= 0.0f)
         {
-            smokedelay += 0.5f;//0.2f; // PSVITA TWEAK
+            smokedelay += 0.4f;//0.2f; // PSVITA TWEAK
 
             PartikelSystem.PushPartikel (xPos + 20 + rand ()%10, yPos + 290 + rand()%5, SMOKE3_U);
             PartikelSystem.PushPartikel (xPos + 20 + rand ()%13, yPos + 290 + rand()%5, ROCKETSMOKE);
@@ -125,13 +125,13 @@ void GegnerBigRocket::GegnerExplode(void)
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION3);
 
-        for (int i=0; i < 24/*30*/; i++) // PSVITA TWEAK
+        for (int i=0; i < 30; i++)
         {
             PartikelSystem.PushPartikel (xPos + rand ()%60, yPos + 30 + rand()%250, EXPLOSION_MEDIUM2);
             PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, SPIDERSPLITTER);
         }
 
-        for (int i=0; i < 64/*80*/; i++) // PSVITA TWEAK
+        for (int i=0; i < 80; i++)
         {
             PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, MINIFLARE);
             PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, LONGFUNKE);

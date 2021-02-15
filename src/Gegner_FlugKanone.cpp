@@ -99,10 +99,10 @@ void GegnerFlugKanone::DoKI(void)
 
 void GegnerFlugKanone::GegnerExplode(void)
 {
-    for (int i=0; i<4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i<5; i++)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 20 + rand()%45), EXPLOSION_MEDIUM2);
-    for (int i=0; i<16/*20*/; i++) // PSVITA TWEAK
+    for (int i=0; i<20; i++)
         PartikelSystem.PushPartikel(float(xPos + rand()%65),
                                       float(yPos + rand()%35), LASERFUNKE2);
 

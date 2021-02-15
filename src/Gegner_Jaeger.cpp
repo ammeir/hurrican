@@ -145,15 +145,10 @@ void GegnerJaeger::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 5? 5: free_space_particles;
-
-    for (int i=0; i < size /*6*/; i++)
+    for (int i=0; i < 6; i++)
         PartikelSystem.PushPartikel (xPos - 10 + rand ()%30, yPos - 8 + rand()%30, EXPLOSION_MEDIUM2);
 
-	free_space_particles = PartikelSystem.GetSpacePartikel();
-	size = free_space_particles > 32? 16: free_space_particles>>1;
-    for (int i=0; i < size /*20*/; ++i)
+    for (int i=0; i < 20; ++i)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%30, yPos + rand()%64, MINIFLARE);
         PartikelSystem.PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);

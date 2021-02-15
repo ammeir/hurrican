@@ -396,7 +396,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
             Projectiles.PushProjectile  (xPos + x1 + 80 - 28, yPos + y1 + 155, UFOLASER);
-            PartikelSystem.PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE);
+            PartikelSystem.PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE); 
 
             y1 = 155;
 

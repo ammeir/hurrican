@@ -1623,17 +1623,17 @@ void MenuClass::ShowMenu(void)
     {
         pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray [TEXT_MENUE_SPIEL_STARTEN], menucolor, 2);
 
-#ifdef PSVITA
+//#ifdef PSVITA
 		// No need for two player mode.
-		pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (2)*35, TextArray [TEXT_ONE_PLAYER], menucolor, 2);
-		pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (1+2)*35, TextArray [TEXT_ONE_PLAYER+1], menucolor2, 2);
-#else
+		//pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (2)*35, TextArray [TEXT_ONE_PLAYER], menucolor, 2);
+		//pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (1+2)*35, TextArray [TEXT_ONE_PLAYER+1], menucolor2, 2);
+//#else
         for (int i=0; i<2; i++)
             if (AktuellerPunkt != i)
                 pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i+2)*35, TextArray [TEXT_ONE_PLAYER+i], menucolor2, 2);
 
         pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (AktuellerPunkt+2)*35, TextArray [TEXT_ONE_PLAYER+AktuellerPunkt], menucolor, 2);
-#endif
+//#endif
     }
     break;
 
@@ -2860,11 +2860,11 @@ void MenuClass::DoMenu(void)
         // Menu-Punkt ausgewählt ?
         if (selected)
         {
-#ifdef PSVITA // No need for two player mode
-			tempNUMPLAYERS = 1;
-#else
+//#ifdef PSVITA // No need for two player mode
+			//tempNUMPLAYERS = 1;
+//#else
 			tempNUMPLAYERS = AktuellerPunkt + 1;
-#endif			
+//#endif			
             AktuellerPunkt = 1;
 
             AktuellerZustand = MENUZUSTAND_SELECTSKILL;

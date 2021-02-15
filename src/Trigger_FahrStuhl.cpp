@@ -162,19 +162,19 @@ void GegnerFahrstuhl::GegnerExplode(void)
 {
     FahrstuhlPos = -1.0f;
 
-    ShakeScreen (8/*10*/); // PSVITA TWEAK
+    ShakeScreen (10);
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
 
-    for (int j=0; j < 80/*100*/; ++j) // PSVITA TWEAK
+    for (int j=0; j < 100; ++j)
         PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, SPIDERSPLITTER);
 
-    for (int j=0; j < 40/*50*/; ++j) // PSVITA TWEAK
+    for (int j=0; j < 50; ++j)
     {
         PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, ROCKETSMOKE);
         PartikelSystem.PushPartikel(xPos - 30 + rand()%400, yPos - 30 + rand()%100, EXPLOSION_MEDIUM2);
     }
 
-    for (int j=0; j < 16/*20*/; ++j) // PSVITA TWEAK
+    for (int j=0; j < 20; ++j)
         PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, SPLITTER);
 
     TileEngine.Zustand = ZUSTAND_SCROLLBAR;

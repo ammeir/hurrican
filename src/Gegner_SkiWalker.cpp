@@ -184,7 +184,7 @@ void GegnerSkiWalker::DoKI(void)
 
 void GegnerSkiWalker::GegnerExplode(void)
 {
-    for (int i=0; i<4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i<5; i++)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 20 + rand()%45), EXPLOSION_MEDIUM2);
 

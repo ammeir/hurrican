@@ -195,13 +195,20 @@ void GegnerRotzpott::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     //int i = 0;
-    for (int i = 0; i < 6/*8*/; i++) // PSVITA TWEAK
+    /*for (int i = 0; i < 8; i++)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, EXPLOSION_MEDIUM2);
         PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, SPIDERSPLITTER);
-    }
+    }*/
 
-    for (int i = 0; i < 3/*4*/; i++) // PSVITA TWEAK
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 8; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, EXPLOSION_MEDIUM2);
+	for (int i=0; i< 8; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, SPIDERSPLITTER);
+
+    for (int i = 0; i < 4; i++)
         PartikelSystem.PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%20, SCHROTT1);
 
     Player[0].Score += 350;

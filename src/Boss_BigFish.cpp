@@ -482,9 +482,9 @@ void GegnerBigFish::GegnerExplode(void)
         Gegner.PushGegner(xPos + rand()%200+40,
                             yPos + 30 + rand()%80, PIRANHA, 99, 0, false);
 
-	// PSVITA TWEAK
-    //for (int i = 0; i < NUMPLAYERS; i++)
-    //    DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
+	
+    for (int i = 0; i < NUMPLAYERS; i++)
+        DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
 
     ShakeScreen(4);
 

@@ -278,7 +278,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 
             if (SmokeDelay < 0.0f)
             {
-                SmokeDelay = 1.6f;//0.4f; // PSVITA TWEAK
+                SmokeDelay = 1.2f;//0.4f; // PSVITA TWEAK
                 PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
                 PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
             }
@@ -327,7 +327,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
             HochCounter = TIME_TILL_HOCH;
 
             // Rauch
-            for (int i = 1; i < 8/*10*/; ++i) // PSVITA TWEAK
+            for (int i = 1; i < 10; ++i)
                 PartikelSystem.PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
 
             SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
@@ -401,7 +401,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 	// PSVITA TWEAK:
     if (SmokeDelay2 < 0.0f)
     {
-        SmokeDelay2 = 1.5f;//0.3f;
+        SmokeDelay2 = 1.2f;//0.3f;
 
         // Links oben rausdampfen lassen
         if (Energy < 3040/*3800*/)

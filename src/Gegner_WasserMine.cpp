@@ -48,10 +48,10 @@ void GegnerWasserMine::GegnerExplode(void)
 
 	float _xPos = xPos - 5;
 	float _yPos = yPos - 5;
-    for (int i = 0; i < 35/*50*/; ++i) // PSVITA TWEAK
+    for (int i = 0; i < 50; ++i)
         PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%60, WATERFLUSH_HIGH);
 
-    for (int i = 0; i < 17/*25*/; ++i) // PSVITA TWEAK
+    for (int i = 0; i < 25; ++i)
         PartikelSystem.PushPartikel(xPos - 5 + rand()%40, yPos - 50 + rand()%110, SPIDERSPLITTER);
 
     PartikelSystem.PushPartikel(xPos - 40, yPos - 55, EXPLOSION_GIANT);

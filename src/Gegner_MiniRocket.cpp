@@ -160,10 +160,10 @@ void GegnerMiniRocket::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
     int i = 0;
-    for (i=0; i < 4/*5*/; i++) // PSVITA TWEAK
+    for (i=0; i < 5; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SMOKE);
 
-    for (i=0; i < 4/*5*/; i++) // PSVITA TWEAK
+    for (i=0; i < 5; i++)
         PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
 
     Player[0].Score += 50;

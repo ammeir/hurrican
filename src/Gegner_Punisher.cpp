@@ -51,15 +51,16 @@ void GegnerPunisher::DoDraw(void)
     case GEGNER_SPECIAL:
     {
 		// PSVITA TWEAK
-		// Make a batch render call for better performance.
+		// Make a batch draw for better performance.
 		static VERTEX2D vertices[170*6];
 		int ind = 0;
         
 		for (int i = 0; i < 170; ++i)
         {
             pGegnerGrafix[GegnerArt]->SetRect(3 * 170, 2 * 170 + i, 4 * 170, 2 * 170 + i+1);
-            pGegnerGrafix[GegnerArt]->PrepareSprite((float)(xPos-TileEngine.XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
+            pGegnerGrafix[GegnerArt]->GetSpriteTriangles((float)(xPos-TileEngine.XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
                                                    (float)(yPos-TileEngine.YOffset + i),
+												   -1,
                                                    D3DCOLOR_RGBA (255, 255, 255, (int)alpha), 
 												   &vertices[ind]);
 			ind += 6;

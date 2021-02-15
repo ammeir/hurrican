@@ -91,7 +91,7 @@ void GegnerSchneekoppe::DoKI(void)
 
 void GegnerSchneekoppe::GegnerExplode(void)
 {
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 10 + rand ()%20,
                                       yPos - 10 + rand ()%20, BLUE_EXPLOSION);
 

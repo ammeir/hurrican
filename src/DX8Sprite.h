@@ -249,7 +249,9 @@ public:
     void  RenderSpriteRotatedOffset(float x, float y, float Winkel,	// Sprite rotiert darstellen mit Verschiebung
                                     float offx, float offy, D3DCOLOR Color, bool mirrored = false);
 
-	void PrepareSprite(float x, float y, D3DCOLOR Color, VERTEX2D* TriangleStrip);
+	void GetSpriteTriangles(float x, float y, int Anim, D3DCOLOR Color, VERTEX2D* TriangleStrip);
+	void GetScaledSpriteTriangles(float x, float y, int width, int height, D3DCOLOR Color, VERTEX2D* TriangleStrip);
+	void GetScaledSpriteAnimTriangles(float x, float y, int width, int height, int Anim, D3DCOLOR Color, VERTEX2D* TriangleStrip);
 
 };
 

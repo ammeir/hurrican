@@ -23,7 +23,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_STARS		200//300 PSVITA TWEAK		// Anzahl scrollender Sterne im Hintergrund
+#define MAX_STARS		250//300 PSVITA TWEAK		// Anzahl scrollender Sterne im Hintergrund
 #define MAX_HIGHSCORES	10							// Anzahl der Highscore-Eintr�ge
 #define MAX_SAVEGAMES	10							// Anzahl der Savegame Slots
 #define MAX_COLORS		99 + MAX_HIGHSCORES			// Anzahl der Blink-Farben in der Highscore

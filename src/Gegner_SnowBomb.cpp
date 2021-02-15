@@ -147,10 +147,10 @@ void GegnerSnowBomb::DoKI(void)
 
 void GegnerSnowBomb::GegnerExplode(void)
 {
-    for (int i=0; i < 6/*8*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 8; i++)
         Projectiles.PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
 
-    for (int i=0; i < 16/*20*/; i++) // PSVITA TWEAK
+    for (int i=0; i < 20; i++)
         PartikelSystem.PushPartikel(xPos + rand()%70 - 10, yPos + rand()%70 - 10, SNOWFLUSH);
 
     SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);

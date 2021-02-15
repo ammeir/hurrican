@@ -92,14 +92,10 @@ void GegnerColumn2::DoKI(void)
     {
         Handlung = GEGNER_EXPLODIEREN;
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-        for (int i = 0; i < size/*20*/; ++i)
+        for (int i = 0; i < 20; ++i)
             PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%15 - 20, SMOKE);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 10? 10: free_space_particles;
-        for (int i = 0; i < size/*10*/; i++)
+        for (int i = 0; i < 10; i++)
             PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%10 - 5, ROCKSPLITTERSMALL);
 
         FallSpeed = 2.0f;
@@ -151,18 +147,21 @@ void GegnerColumn2::DoKI(void)
 
 void GegnerColumn2::GegnerExplode(void)
 {
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 20? 20: free_space_particles; // PSVITA TWEAK
-    for (int i = 0; i < size/*30*/; ++i)
+    for (int i = 0; i < 30; ++i)
         PartikelSystem.PushPartikel (xPos + rand ()%100, yPos + 80 + rand()%40, SMOKE);
 
-	free_space_particles = PartikelSystem.GetSpacePartikel();
-	size = free_space_particles > 50? 25: free_space_particles >> 1; // PSVITA TWEAK
-    for (int i = 0; i < size/*40*/; ++i)
+   /* for (int i = 0; i < 40; ++i)
     {
         PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTERSMALL);
         PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTER);
-    }
+    }*/
+
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 40; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTERSMALL);
+	for (int i=0; i< 40; ++i)
+		PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTER);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);
 

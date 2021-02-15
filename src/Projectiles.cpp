@@ -38,6 +38,24 @@ uint32_t                bo, bu, bl, br;						// Blockwerte um den aktuellen Schu
 float					WinkelUebergabe;					// Extra "Parameter" für PushProjectile
 
 
+// Vertex arrays for batch drawing
+static VERTEX2D verElektropampe[500*6];
+static int verElektropampeSize = 0;
+static VERTEX2D verSpreadshotSmoke[500*6];
+static int verSpreadshotSmokeSize = 0;
+static VERTEX2D verPowerlineSmoke[500*6];
+static int verPowerlineSmokeSize = 0;
+static VERTEX2D verBounceshot[500*6];
+static int verBounceshotSize = 0;
+static VERTEX2D verFeuerfalleLavamann[500*6];
+static int verFeuerfalleLavamannSize = 0;
+static VERTEX2D verBlitzbeam[500*6];
+static int verBlitzbeamSize = 0;
+static VERTEX2D verLavaflare[500*6];
+static int verLavaflareSize = 0;
+static VERTEX2D verLavaflareScaled[500*6];
+static int verLavaflareScaledSize = 0;
+
 // --------------------------------------------------------------------------------------
 // ProjectileKlasse Funktionen
 // --------------------------------------------------------------------------------------
@@ -2312,12 +2330,17 @@ void ProjectileClass::Render(void)
         int size = (pParent->CurrentWeaponLevel[2] * 2 + 12);
         if (size < 20)
             size = 20;
-        ProjectileGrafix[ShotArt].RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
-                (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
+
+		ProjectileGrafix[ShotArt].GetScaledSpriteTriangles((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
+                (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF, &verBounceshot[verBounceshotSize]);
+        
+		verBounceshotSize += 6;
+		//ProjectileGrafix[ShotArt].RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
+        //        (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
     }
     else if (ShotArt == ELEKTROPAMPE)
     {
-        DirectGraphics.SetAdditiveMode();
+        //DirectGraphics.SetAdditiveMode();
 
         if (Counter > 255.0f)
             Color = D3DCOLOR_RGBA(255, 255, 255, 255);
@@ -2325,10 +2348,16 @@ void ProjectileClass::Render(void)
             Color = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter));
 
         ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
-        ProjectileGrafix[ShotArt].RenderSprite((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset), Color);
+        
+		ProjectileGrafix[ShotArt].GetSpriteTriangles((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset), -1, Color, &verElektropampe[verElektropampeSize]);
+		
+		verElektropampeSize += 6;
 
-        DirectGraphics.SetColorKeyMode();
+		//ProjectileGrafix[ShotArt].RenderSprite((float)(xPos-TileEngine.XOffset),
+        //        (float)(yPos-TileEngine.YOffset), Color);
+
+        //DirectGraphics.SetColorKeyMode();
     }
     else if (ShotArt == FEUERFALLE ||
              ShotArt == SPIDERFIRE ||
@@ -2353,15 +2382,22 @@ void ProjectileClass::Render(void)
     //
     else if (ShotArt == FEUERFALLE_LAVAMANN)
     {
-        DirectGraphics.SetAdditiveMode();
+        //DirectGraphics.SetAdditiveMode();
         Color = D3DCOLOR_RGBA(255, 255, 255, 192 - (AnimPhase * 6));
 
         int a = 30 - AnimPhase;
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
+		ProjectileGrafix[ShotArt].GetScaledSpriteAnimTriangles(46+(float)(xPos-TileEngine.XOffset)-(a+30),
                 54+(float)(yPos-TileEngine.YOffset)-(a+30),
-                int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color);
-        DirectGraphics.SetColorKeyMode();
+                int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color, &verFeuerfalleLavamann[verFeuerfalleLavamannSize]);
+
+		verFeuerfalleLavamannSize += 6;
+
+        //ProjectileGrafix[ShotArt].RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
+        //        54+(float)(yPos-TileEngine.YOffset)-(a+30),
+        //        int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color);
+        
+		//DirectGraphics.SetColorKeyMode();
     }
 
     // Druckwellen Smartbomb anzeigen
@@ -2370,14 +2406,26 @@ void ProjectileClass::Render(void)
         DirectGraphics.SetAdditiveMode();
         ShotRect[ShotArt].bottom = (255-int(Damage/2))*2;
         ShotRect[ShotArt].right  = (255-int(Damage/2))*2;
+       
+		Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/2));
+        /*ProjectileGrafix[ShotArt].GetScaledSpriteTriangles((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
+                (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color, &verSmartbomb[verSmartbombSize]);
+		
+		verSmartbombSize += 6;*/
 
-        Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/2));
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+		ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/4));
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+		/*ProjectileGrafix[ShotArt].GetScaledSpriteTriangles((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
+                (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color, &verSmartbomb[verSmartbombSize]);
+		
+		verSmartbombSize += 6;*/
+		
+		ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
@@ -2385,14 +2433,20 @@ void ProjectileClass::Render(void)
     }
     else if (ShotArt == BLITZBEAM)
     {
-        DirectGraphics.SetAdditiveMode();
+        //DirectGraphics.SetAdditiveMode();
         Color = 0xFFFFFFFF;
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+		ProjectileGrafix[ShotArt].GetScaledSpriteAnimTriangles((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
-                Damage, Damage, AnimPhase, Color);
+                Damage, Damage, AnimPhase, Color, &verBlitzbeam[verBlitzbeamSize]);
+		
+		verBlitzbeamSize += 6;
 
-        DirectGraphics.SetColorKeyMode();
+        //ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+        //        (float)(yPos-TileEngine.YOffset),
+        //        Damage, Damage, AnimPhase, Color);
+
+        //DirectGraphics.SetColorKeyMode();
     }
 
     // Fetter Spinnenlaser
@@ -2472,8 +2526,12 @@ void ProjectileClass::Render(void)
         }
         else if (ShotArt == ELEKTROSCHUSS)
         {
-            Projectiles.LavaFlare.RenderSpriteScaled(xPos-28-float(TileEngine.XOffset),
-                                         yPos-28-float(TileEngine.YOffset), 100, 100, 0xFFFF22BB);
+			Projectiles.LavaFlare.GetScaledSpriteTriangles(xPos-28-float(TileEngine.XOffset),
+                                         yPos-28-float(TileEngine.YOffset), 100, 100, 0xFFFF22BB, &verLavaflareScaled[verLavaflareScaledSize]);
+		
+			verLavaflareScaledSize += 6;
+            //Projectiles.LavaFlare.RenderSpriteScaled(xPos-28-float(TileEngine.XOffset),
+            //                             yPos-28-float(TileEngine.YOffset), 100, 100, 0xFFFF22BB);
         }
         else if (ShotArt == LASERSHOT ||
                  ShotArt == LASERSHOT2)
@@ -2548,41 +2606,74 @@ void ProjectileClass::Render(void)
         else if (ShotArt == SPREADSHOTBIG ||
                  ShotArt == SPREADSHOTBIG2)
         {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos-16-float(TileEngine.XOffset),
-                                         yPos-18-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
+			Projectiles.SpreadShotSmoke.GetSpriteTriangles(xPos-16-float(TileEngine.XOffset),
+                                         yPos-18-float(TileEngine.YOffset), 0, 0xAAFFFFFF, &verSpreadshotSmoke[verSpreadshotSmokeSize]);
+		
+			verSpreadshotSmokeSize += 6;
+            //Projectiles.SpreadShotSmoke.RenderSprite(xPos-16-float(TileEngine.XOffset),
+            //                             yPos-18-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == PFLANZESHOT)
         {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos-24-float(TileEngine.XOffset),
-                                         yPos-24-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
+			Projectiles.SpreadShotSmoke.GetSpriteTriangles(xPos-24-float(TileEngine.XOffset),
+                                         yPos-24-float(TileEngine.YOffset), 0, 0xAAFFFFFF, &verSpreadshotSmoke[verSpreadshotSmokeSize]);
+		
+			verSpreadshotSmokeSize += 6;
+			//Projectiles.SpreadShotSmoke.RenderSprite(xPos-24-float(TileEngine.XOffset),
+            //                             yPos-24-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == SUCHSCHUSS2)
         {
-            Projectiles.LavaFlare.RenderSpriteScaled(xPos-24-float(TileEngine.XOffset),
-                                         yPos-24-float(TileEngine.YOffset), 64, 64, 0xCC0088FF);
+			Projectiles.LavaFlare.GetScaledSpriteTriangles(xPos-24-float(TileEngine.XOffset),
+                                         yPos-24-float(TileEngine.YOffset), 64, 64, 0xCC0088FF, &verLavaflareScaled[verLavaflareScaledSize]);
+		
+			verLavaflareScaledSize += 6;
+            
+			//Projectiles.LavaFlare.RenderSpriteScaled(xPos-24-float(TileEngine.XOffset),
+            //                             yPos-24-float(TileEngine.YOffset), 64, 64, 0xCC0088FF);
         }
 
         else if (ShotArt == WALKER_LASER)
-            Projectiles.LavaFlare.RenderSprite(xPos-45-float(TileEngine.XOffset),
-                                   yPos-60-float(TileEngine.YOffset), 0, 0xAAFF3300);
-
+		{
+			Projectiles.LavaFlare.GetSpriteTriangles(xPos-45-float(TileEngine.XOffset),
+                                     yPos-60-float(TileEngine.YOffset), 0, 0xAAFF3300, &verLavaflare[verLavaflareSize]);
+		
+			verLavaflareSize += 6;
+            //Projectiles.LavaFlare.RenderSprite(xPos-45-float(TileEngine.XOffset),
+            //                       yPos-60-float(TileEngine.YOffset), 0, 0xAAFF3300);
+		}
         else if (ShotArt == FETTESPINNESHOT ||
                  ShotArt == FETTESPINNESHOT2)		// Laser der fetten Spinne
         {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos-12-float(TileEngine.XOffset),
-                                         yPos- 7-float(TileEngine.YOffset), 0, 0xFFFF0000);
+			Projectiles.SpreadShotSmoke.GetSpriteTriangles(xPos-12-float(TileEngine.XOffset),
+                                         yPos- 7-float(TileEngine.YOffset), 0, 0xFFFF0000, &verSpreadshotSmoke[verSpreadshotSmokeSize]);
+		
+			verSpreadshotSmokeSize += 6;
+            //Projectiles.SpreadShotSmoke.RenderSprite(xPos-12-float(TileEngine.XOffset),
+            //                             yPos- 7-float(TileEngine.YOffset), 0, 0xFFFF0000);
         }
 
         if (ShotArt == POWERLINE)				// Powerline leuchten lassen ?
         {
-            if (xSpeed < 0.0f)
-                Projectiles.PowerlineSmoke.RenderSprite(xPos-10-float(TileEngine.XOffset),
-                                            yPos   -float(TileEngine.YOffset), 0, 0xFFFFFFFF);
-            else
-                Projectiles.PowerlineSmoke.RenderSprite(xPos-28-float(TileEngine.XOffset),
-                                            yPos   -float(TileEngine.YOffset), 1, 0xFFFFFFFF);
+            if (xSpeed < 0.0f){
+				Projectiles.PowerlineSmoke.GetSpriteTriangles(xPos-10-float(TileEngine.XOffset),
+                                              yPos   -float(TileEngine.YOffset), 0, 0xFFFFFFFF, &verPowerlineSmoke[verPowerlineSmokeSize]);
+		
+			
+                //Projectiles.PowerlineSmoke.RenderSprite(xPos-10-float(TileEngine.XOffset),
+                //                            yPos   -float(TileEngine.YOffset), 0, 0xFFFFFFFF);
+			}else{
+				Projectiles.PowerlineSmoke.GetSpriteTriangles(xPos-28-float(TileEngine.XOffset),
+                                              yPos   -float(TileEngine.YOffset), 1, 0xFFFFFFFF, &verPowerlineSmoke[verPowerlineSmokeSize]);
+		
+			
+                //Projectiles.PowerlineSmoke.RenderSprite(xPos-28-float(TileEngine.XOffset),
+                //                            yPos   -float(TileEngine.YOffset), 1, 0xFFFFFFFF);
+			}
+
+			verPowerlineSmokeSize += 6;
         }
 
         DirectGraphics.SetColorKeyMode();
@@ -2863,7 +2954,7 @@ void ProjectileClass::Run(void)
 
         if (AnimCount < 0.0f)
         {
-            AnimCount = 0.3f;//0.1f; PSVITA TWEAK
+            AnimCount = 0.1f;
             PartikelSystem.PushPartikel(xPos, yPos + 10 + rand()%5, FIREBALL_SMOKE);
         }
 
@@ -2884,7 +2975,7 @@ void ProjectileClass::Run(void)
 
         if (AnimCount < 0.0f)
         {
-            AnimCount = 0.3f;//0.1f; // PSVITA TWEAK
+            AnimCount = 0.1f;
 
             //for (int i = 0; i < 4; i++)
 			int xPos_ = xPos + 10;
@@ -2922,7 +3013,7 @@ void ProjectileClass::Run(void)
 			PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%50, FUNKE);
 			PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%50, FUNKE);
 			PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%50, FUNKE);
-			//PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%50, FUNKE);
+			PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%50, FUNKE);
         }
 
         if (bl & BLOCKWERT_WAND ||
@@ -3368,7 +3459,7 @@ void ProjectileClass::Run(void)
 		int xPos_ = xPos + 33;
 		int yPos_ = yPos + 70;
         // Flamme erzeugen
-        for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
+        for (int i=0; i < int(200 * Timer.getElapsed())+1; ++i)
         {
             switch (AnimPhase)
             {
@@ -3438,7 +3529,7 @@ void ProjectileClass::Run(void)
         {
 			int xPos_ = xPos + 40;
             // Flamme erzeugen
-            for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
+            for (int i=0; i < int(200 * Timer.getElapsed())+1; ++i)
             {
                 switch (AnimPhase)
                 {
@@ -4090,7 +4181,7 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SPREADHIT);
         PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
+        for(int i=0; i<4; i++)
         {
             PartikelSystem.PushPartikel(xPos - 5 + rand()%10, yPos-5+rand()%10, FUNKE);
             PartikelSystem.PushPartikel(xPos - 5 + rand()%10, yPos-5+rand()%10, LASERFUNKE2);
@@ -4110,8 +4201,8 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos+5, yPos+5, SHOTFLARE);
 
-        for(int i=0; i<3/*4*/; i++)
-            PartikelSystem.PushPartikel(xPos+10, yPos+10, FUNKE); // PSVITA TWEAK
+        for(int i=0; i<4; i++)
+            PartikelSystem.PushPartikel(xPos+10, yPos+10, FUNKE);
 
 
         if (rand()%3 == 0)
@@ -4126,8 +4217,11 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
-            PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
+        //for(int i=0; i<4; i++)
+        PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
+		PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
+		PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
+		PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
 
 
         if (rand()%3 == 0)
@@ -4146,11 +4240,9 @@ void ProjectileClass::ExplodeShot(void)
     case SPREADSHOTBIG2:
     {
         SoundManager.PlayWave(50, 128, rand()%2000+11025, SOUND_SPREADHIT);
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos+5;
 		float _yPos = yPos+5;
-        for(int i=0; i<size/*8*/; ++i)
+        for(int i=0; i<8; ++i)
             PartikelSystem.PushPartikel(_xPos, _yPos, FUNKE);
 
         for(int i=0; i<3; ++i)
@@ -4177,11 +4269,9 @@ void ProjectileClass::ExplodeShot(void)
     case LASERSHOTBIG:
     case LASERSHOTBIG2:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos+10;
 		float _yPos = yPos+5;
-        for(int i=0; i<size/*8*/; ++i)
+        for(int i=0; i<8; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%70, _yPos, LASERFUNKE);
 
 		_yPos = yPos-10;
@@ -4198,7 +4288,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos+4, yPos+4, SHOTFLARE2);
 
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
+        for(int i=0; i<4; i++)
             PartikelSystem.PushPartikel(xPos+8, yPos+8, FUNKE2);
 
         // Aufsplitten ?
@@ -4301,7 +4391,7 @@ void ProjectileClass::ExplodeShot(void)
 
         PartikelSystem.PushPartikel(xPos-32, yPos-32, EXPLOSIONFLARE);
 
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
+        for(int i=0; i<4; i++)
             PartikelSystem.PushPartikel(xPos+8, yPos+8, FUNKE2);
 
         // Aufsplitten ?
@@ -4347,7 +4437,7 @@ void ProjectileClass::ExplodeShot(void)
 
         PartikelSystem.PushPartikel(xPos-32, yPos-32, EXPLOSIONFLARE);
 
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
+        for(int i=0; i<4; i++)
             PartikelSystem.PushPartikel(xPos+8, yPos+8, FUNKE2);
 
         // Aufsplitten ?
@@ -4390,7 +4480,7 @@ void ProjectileClass::ExplodeShot(void)
     case SUCHSCHUSS :
     {
         SoundManager.PlayWave(25, 128, 11025, SOUND_SPREADHIT);
-        for(int i=0; i<3/*4*/; i++) // PSVITA TWEAK
+        for(int i=0; i<4; i++)
             PartikelSystem.PushPartikel(xPos+5, yPos+5, FUNKE);
 
         PartikelSystem.PushPartikel(xPos-10, yPos-10, SMOKE);
@@ -4412,8 +4502,8 @@ void ProjectileClass::ExplodeShot(void)
 		PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
 		PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
 		PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
-		//PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2); // PSVITA TWEAK
-		//PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
+		PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
+		PartikelSystem.PushPartikel(xPos_ + rand()%40, yPos_ + rand()%40, LILA2);
 
         PartikelSystem.PushPartikel(xPos - 40.0f, yPos - 40.0f, EXPLOSIONFLARE2);
     }
@@ -4455,14 +4545,14 @@ void ProjectileClass::ExplodeShot(void)
 		PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
 		PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
 		PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
-		//PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE); // PSVITA TWEAK
-		//PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
+		PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
+		PartikelSystem.PushPartikel(xPos + rand ()% 12, yPos + rand ()% 12, LASERFUNKE);
 
         //for (int i = 0; i < 4; i++)
         PartikelSystem.PushPartikel(xPos - 4 + rand ()% 8, yPos - 4 + rand ()% 8, SMOKE3);
 		PartikelSystem.PushPartikel(xPos - 4 + rand ()% 8, yPos - 4 + rand ()% 8, SMOKE3);
 		PartikelSystem.PushPartikel(xPos - 4 + rand ()% 8, yPos - 4 + rand ()% 8, SMOKE3);
-		//PartikelSystem.PushPartikel(xPos - 4 + rand ()% 8, yPos - 4 + rand ()% 8, SMOKE3); // PSVITA TWEAK
+		PartikelSystem.PushPartikel(xPos - 4 + rand ()% 8, yPos - 4 + rand ()% 8, SMOKE3);
 
     }
     break;
@@ -4472,9 +4562,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION3);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 32? 32: free_space_particles;
-        for (int i = 0; i < size/*40*/; ++i)
+        for (int i = 0; i < 40; ++i)
             PartikelSystem.PushPartikel(xPos + rand()%35, yPos + rand()%35, FUNKE2);
     }
     break;
@@ -4484,19 +4572,15 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(25, 128, 11025, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos+10;
-        for(int i=0; i<size/*8*/; ++i)
+        for(int i=0; i<8; ++i)
             PartikelSystem.PushPartikel(_xPos, yPos, FUNKE);
     }
     break;
 
     case PHARAOLASER:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 40? 40: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*50*/; ++i)
+        for (int i=0; i < 50; ++i)
             PartikelSystem.PushPartikel(xPos + rand()%48-6, yPos + rand()%48-6, PHARAOSMOKE);
     }
     break;
@@ -4506,9 +4590,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos + 8, yPos + 8, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 160? 80: free_space_particles>>1;
-		for (int i=0; i < size/*100*/; ++i)
+		for (int i=0; i < 100; ++i)
         {
             PartikelSystem.PushPartikel(xPos + rand()%55+10 - 6, yPos + rand()%55+10 - 6, ROCKETSMOKE);
             PartikelSystem.PushPartikel(xPos + rand()%35+20 - 6, yPos + rand()%35+20 - 6, ROCKETSMOKE);
@@ -4522,9 +4604,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos + 8, yPos - 20, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 120? 60: free_space_particles>>1; // PSVITA TWEAK
-		for (int i=0; i < size/*75*/; i++)
+		for (int i=0; i < 75; ++i)
         {
             PartikelSystem.PushPartikel(xPos + rand()%40 + 18, yPos + rand()%40 - 20, ROCKETSMOKE);
             PartikelSystem.PushPartikel(xPos + rand()%20 + 26, yPos + rand()%20 - 10, ROCKETSMOKE);
@@ -4538,9 +4618,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         PartikelSystem.PushPartikel(xPos + 8, yPos - 20, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*20*/; ++i)
+        for (int i=0; i < 20; ++i)
             PartikelSystem.PushPartikel(xPos + rand()%33 , yPos + rand()%10, BUBBLE);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
@@ -4558,15 +4636,11 @@ void ProjectileClass::ExplodeShot(void)
 
     case FLUGLASER:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 10? 10: free_space_particles; // PSVITA TWEAK
 		float _yPos = yPos + 10;
-        for (int i=0; i < size/*12*/; ++i)
+        for (int i=0; i < 12; ++i)
             PartikelSystem.PushPartikel(xPos + rand()%4, _yPos + rand()%14, FUNKE);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 5? 5: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*6*/; ++i)
+        for (int i=0; i < 6; ++i)
             PartikelSystem.PushPartikel(xPos + rand()%4, _yPos + rand()%14, LASERFUNKE2);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SPREADHIT);
@@ -4601,21 +4675,16 @@ void ProjectileClass::ExplodeShot(void)
         // Partikel
         //
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 200? 200: free_space_particles; // PSVITA TWEAK
-
 		float x = xPos + Damage / 2.0f;
 		float y = yPos + Damage / 2.0f;
 		
-        for (int i=0; i < size/*300*/; ++i)
+        for (int i=0; i < 300; ++i)
 			PartikelSystem.PushPartikel(x, y, BEAMSMOKE3);
        
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 70? 70: free_space_particles; // PSVITA TWEAK
 		x = xPos + Damage / 2.0f - 12;
 		y = yPos + Damage / 2.0f - 12;
 
-		for (int i=0; i < size/*100*/; ++i)	
+		for (int i=0; i < 100; ++i)	
 			PartikelSystem.PushPartikel(x, y, BEAMSMOKE4);
 
         // 2 Druckwellen (xPos um 1 Pixel verschoben, dadurch breitet sich die eine mit 30, die andere mit 10 Pixeln aus)
@@ -4657,10 +4726,8 @@ void ProjectileClass::ExplodeShot(void)
 
     case STELZLASER:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 40? 40: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*50*/; i++)
-            PartikelSystem.PushPartikel(xPos + rand()%60-6, yPos + rand()%35+5, PHARAOSMOKE);
+        for (int i=0; i < 50; ++i)
+           PartikelSystem.PushPartikel(xPos + rand()%60-6, yPos + rand()%35+5, PHARAOSMOKE);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SPREADHIT);
     }
@@ -4668,9 +4735,7 @@ void ProjectileClass::ExplodeShot(void)
 
     case PFLANZESHOT:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*20*/; i++)
+        for (int i=0; i < 20; i++)
             PartikelSystem.PushPartikel(xPos + rand()%16, yPos + rand()%16, FUNKE);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SPREADHIT);
@@ -4684,11 +4749,9 @@ void ProjectileClass::ExplodeShot(void)
         for (int i=0; i < 5; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, EXPLOSION_GREEN);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 70? 70: free_space_particles; // PSVITA TWEAK
 		_xPos = xPos + 10;
 		_yPos = yPos + 10;
-        for (int i=0; i < size/*100*/; ++i)
+        for (int i=0; i < 100; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, FUNKE2);
 
         SoundManager.PlayWave(100, 128, 10000 + rand()%4000, SOUND_EXPLOSION1);
@@ -4700,9 +4763,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(50, 128, rand()%2000+11025, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 10? 10: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*12*/; ++i)
+        for(int i=0; i<12; ++i)
             PartikelSystem.PushPartikel(xPos+2, yPos+2, FUNKE);
 
         PartikelSystem.PushPartikel(xPos, yPos, SMOKE3);
@@ -4730,9 +4791,7 @@ void ProjectileClass::ExplodeShot(void)
         for (int i = 0; i < 2; i++)
             PartikelSystem.PushPartikel(xPos - 10 + rand()%5,
                                           yPos - 10, SPIDERSPLITTER);
-
-
-        for (int i = 0; i < 12/*15*/; ++i) // PSVITA TWEAK
+        for (int i = 0; i < 15; ++i)
             Projectiles.PushProjectile(xPos - 20, yPos + i * 9, FEUERFALLE);
     }
     break;
@@ -4741,16 +4800,12 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(50, 128, rand()%4000+8000, SOUND_EXPLOSION3);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 8? 8: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos - 10;
 		float _yPos = yPos - 10;
-        for (int i = 0; i < size/*10*/; i++)
+        for (int i = 0; i < 10; ++i)
             PartikelSystem.PushPartikel(_xPos + rand ()%20, _yPos + rand ()%20, BLUE_EXPLOSION);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 12? 12: free_space_particles; // PSVITA TWEAK
-        for (int i = 0; i < size/*15*/; ++i)
+        for (int i = 0; i < 15; ++i)
             PartikelSystem.PushPartikel(_xPos + rand ()%20, _yPos + rand ()%20, WATERFLUSH_HIGH2);
 
     }
@@ -4761,18 +4816,14 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, rand()%2000+11025, SOUND_EXPLOSION3);
         PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_TRACE);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos + 10;
 		float _yPos = yPos + 10;
-        for (int i = 0; i < size/*20*/; ++i)
+        for (int i = 0; i < 20; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%60, SPIDERSPLITTER);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 4? 4: free_space_particles; // PSVITA TWEAK
 		_xPos = xPos - 30;
 		_yPos = yPos - 30;
-        for (int i = 0; i < size/*5*/; i++)
+        for (int i = 0; i < 5; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%66, _yPos + rand()%83, EXPLOSION_MEDIUM2);
     }
     break;
@@ -4781,9 +4832,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         //PartikelSystem.PushPartikel(xPos + 8, yPos + 8, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 80? 40: free_space_particles>>1; // PSVITA TWEAK
-        for (int i=0; i < size/*50*/; ++i)
+        for (int i=0; i < 50; ++i)
         {
             PartikelSystem.PushPartikel(xPos + rand()%20-10 , yPos + rand()%20-10 , ROCKETSMOKEBLUE);
             PartikelSystem.PushPartikel(xPos + rand()%20-10 , yPos + rand()%20-10 , ROCKETSMOKEBLUE);
@@ -4795,12 +4844,10 @@ void ProjectileClass::ExplodeShot(void)
 
     case SNOWBOMB:
     { 
-        for (int i=0; i < 6/*8*/; ++i) // PSVITA TWEAK
+        for (int i=0; i < 8; ++i)
             Projectiles.PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*20*/; i++)
+        for (int i=0; i < 20; i++)
             PartikelSystem.PushPartikel(xPos + rand()%70 - 10, yPos + rand()%70 - 10, SNOWFLUSH);
 
         SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
@@ -4822,21 +4869,15 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, 16000, SOUND_SPREADHIT);
         SoundManager.PlayWave(100, 128,  8000, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 70? 70: free_space_particles; // PSVITA TWEAK
 		float _xPos = xPos - 5;
 		float _yPos = yPos - 5;
-        for (int i=0; i<size/*100*/; ++i)
+        for (int i=0; i<100; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%50, SMOKE2);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 20? 20: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*30*/; ++i)
+        for(int i=0; i<30; ++i)
             PartikelSystem.PushPartikel(xPos+rand()%40,   yPos+rand()%50,   FUNKE);
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		free_space_particles > 30? 30: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*40*/; ++i)
+        for(int i=0; i<40; ++i)
             PartikelSystem.PushPartikel(xPos+rand()%20+10, yPos+rand()%30+10, PHARAOSMOKE);
 
     }
@@ -4846,9 +4887,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 20? 20: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*30*/; ++i)
+        for (int i=0; i < 30; ++i)
             PartikelSystem.PushPartikel(xPos - 20 + rand()%60, yPos - 20 + rand()%60, SMOKE3);
 
         PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSION_GIANT);
@@ -4861,9 +4900,7 @@ void ProjectileClass::ExplodeShot(void)
 
     case EVILROUND1:
     {
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 35? 35: free_space_particles; // PSVITA TWEAK
-        for (int i=0; i < size/*50*/; ++i)
+        for (int i=0; i < 50; ++i)
         {
             PartikelSystem.PushPartikel(xPos + rand()%20-10 , yPos + rand()%20-10 , EVILROUNDSMOKE);
         }
@@ -4975,9 +5012,7 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
         PartikelSystem.PushPartikel(xPos-16, yPos-16, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*8*/; ++i)
+        for(int i=0; i<8; ++i)
             PartikelSystem.PushPartikel(xPos+4, yPos+4, FUNKE);
 
     }
@@ -4987,9 +5022,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 15? 15: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*24*/; ++i)
+        for(int i=0; i<24; ++i)
             PartikelSystem.PushPartikel(xPos-1 + rand()%2, yPos+i*2+rand()%2, LASERFUNKE2);
     }
     break;
@@ -4998,9 +5031,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*8*/; i++)
+        for(int i=0; i<8; i++)
             PartikelSystem.PushPartikel(xPos+36, yPos, LASERFUNKE2);
     }
     break;
@@ -5009,9 +5040,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_SPREADHIT);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
-        for(int i=0; i<size/*8*/; ++i)
+        for(int i=0; i<8; ++i)
             PartikelSystem.PushPartikel(xPos, yPos, LASERFUNKE2);
     }
     break;
@@ -5024,19 +5053,24 @@ void ProjectileClass::ExplodeShot(void)
 
         PartikelSystem.PushPartikel(xPos-20, yPos-20, EXPLOSION_MEDIUM2);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 120? 60: free_space_particles>>1; // PSVITA TWEAK
 		float _xPos = xPos-20;
 		float _yPos = yPos-20;
-        for(int i=0; i<size/*100*/; ++i) // PSVITA TWEAK
+       
+		/*for(int i=0; i<100; ++i)
         {
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, ROCKETSMOKE);
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, FUNKE);
-        }
+        }*/
 
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 35? 35: free_space_particles;
-        for(int i=0; i<size/*50*/; ++i) // PSVITA TWEAK
+		// PSVITA TWEAK
+		// Make sequental calls with same texture so we can batch draw.
+		for(int i=0; i<100; ++i)
+            PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, ROCKETSMOKE);
+  
+		for(int i=0; i<100; ++i)
+            PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, FUNKE);
+
+        for(int i=0; i<50; ++i)
             PartikelSystem.PushPartikel(_xPos + rand()%40, _yPos + rand()%40, LONGFUNKE);
 
         PartikelSystem.PushPartikel(xPos - 128, yPos - 128, GRENADEFLARE);
@@ -5057,14 +5091,10 @@ void ProjectileClass::ExplodeShot(void)
     {
         SoundManager.PlayWave (75, 128, 15000 + rand ()% 2000, SOUND_EXPLOSION1);
 
-		int free_space_particles = PartikelSystem.GetSpacePartikel();
-		int size = free_space_particles > 6? 6: free_space_particles; // PSVITA TWEAK
-        for (int i = 0; i < size/*8*/; ++i)
+        for (int i = 0; i < 8; ++i)
             PartikelSystem.PushPartikel (xPos - 5 + rand ()%10, yPos - 5 + rand ()%10, SMOKE);
       
-		free_space_particles = PartikelSystem.GetSpacePartikel();
-		size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-		for (int i = 0; i < size/*24*/; ++i)
+		for (int i = 0; i < 24; ++i)
             PartikelSystem.PushPartikel (xPos - 5 + rand ()%10, yPos - 5 + rand ()%10, FUNKE);
     }
     break;
@@ -6015,6 +6045,7 @@ void ProjectileListClass::DoProjectiles(void)
     }
 }
 #endif //0
+
 void ProjectileListClass::DoProjectiles(void)
 {
     ProjectileClass *pPrev = NULL;
@@ -6024,12 +6055,14 @@ void ProjectileListClass::DoProjectiles(void)
 
     while (pCurr != NULL)
     {
+
         if (Console.Showing == false)
             pCurr->Run();
 
         if (pCurr->Damage > 0)
-            pCurr->Render();
-
+			pCurr->Render();
+		
+	
         if (Console.Showing == false)
         {
             if (pCurr->Damage <= 0)			 	// ggf Schuss löschen (bei Damage <= 0)
@@ -6055,4 +6088,89 @@ void ProjectileListClass::DoProjectiles(void)
             pCurr = pCurr->pNext;
         }
     }
+
+	BatchRender();
+}
+
+void ProjectileListClass::BatchRender(void)
+{
+	// PSVITA TWEAK
+	// Batch draw projectiles for better performance.
+
+	if (verBounceshotSize > 0){
+		DirectGraphics.SetTexture(ProjectileGrafix[BOUNCESHOT1].itsTexIdx);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verBounceshotSize/3, &verBounceshot[0]);
+		verBounceshotSize = 0;
+	}
+	
+	if (verSpreadshotSmokeSize > 0){
+		DirectGraphics.SetAdditiveMode();
+		DirectGraphics.SetTexture(Projectiles.SpreadShotSmoke.itsTexIdx);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verSpreadshotSmokeSize/3, &verSpreadshotSmoke[0]);
+		DirectGraphics.SetColorKeyMode();
+		verSpreadshotSmokeSize = 0;
+	}
+
+	if (verPowerlineSmokeSize > 0){
+		DirectGraphics.SetAdditiveMode();
+		DirectGraphics.SetTexture(Projectiles.PowerlineSmoke.itsTexIdx);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verPowerlineSmokeSize/3, &verPowerlineSmoke[0]);
+		DirectGraphics.SetColorKeyMode();
+		verPowerlineSmokeSize = 0;
+	}
+
+	if (verLavaflareSize > 0){
+		DirectGraphics.SetAdditiveMode();
+		DirectGraphics.SetTexture(Projectiles.LavaFlare.itsTexIdx);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verLavaflareSize/3, &verLavaflare[0]);
+		DirectGraphics.SetColorKeyMode();
+		verLavaflareSize = 0;
+	}
+
+	if (verLavaflareScaledSize > 0){
+		
+		DirectGraphics.SetAdditiveMode();
+
+		DirectGraphics.SetTexture(Projectiles.LavaFlare.itsTexIdx);
+		DirectGraphics.SetFilterMode (true);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verLavaflareScaledSize/3, &verLavaflareScaled[0]);
+		DirectGraphics.SetFilterMode (false);
+
+		DirectGraphics.SetColorKeyMode();
+		verLavaflareScaledSize = 0;
+	}
+
+	if (verElektropampeSize > 0){
+		DirectGraphics.SetAdditiveMode();
+
+		DirectGraphics.SetTexture(ProjectileGrafix[ELEKTROPAMPE].itsTexIdx);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verElektropampeSize/3, &verElektropampe[0]);
+		
+		DirectGraphics.SetColorKeyMode();
+		verElektropampeSize = 0;
+	}
+
+	if (verFeuerfalleLavamannSize > 0){
+		DirectGraphics.SetAdditiveMode();
+
+		DirectGraphics.SetTexture(ProjectileGrafix[FEUERFALLE_LAVAMANN].itsTexIdx);
+		DirectGraphics.SetFilterMode (true);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verFeuerfalleLavamannSize/3, &verFeuerfalleLavamann[0]);
+		DirectGraphics.SetFilterMode (false);
+
+		DirectGraphics.SetColorKeyMode();
+		verFeuerfalleLavamannSize = 0;
+	}
+
+	if (verBlitzbeamSize > 0){
+		DirectGraphics.SetAdditiveMode();
+
+		DirectGraphics.SetTexture(ProjectileGrafix[BLITZBEAM].itsTexIdx);
+		DirectGraphics.SetFilterMode (true);
+		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, verBlitzbeamSize/3, &verBlitzbeam[0]);
+		DirectGraphics.SetFilterMode (false);
+
+		DirectGraphics.SetColorKeyMode();
+		verBlitzbeamSize = 0;
+	}
 }

@@ -107,10 +107,10 @@ void GegnerStarBig::GegnerExplode(void)
 {
     PartikelSystem.PushPartikel (xPos-20, yPos-20, EXPLOSION_GIANT);
 
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel (xPos-30+rand()%80, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
 
-    for (int i = 0; i < 12/*15*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 15; i++)
         PartikelSystem.PushPartikel (xPos+rand()%80, yPos+rand()%80, LONGFUNKE);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);

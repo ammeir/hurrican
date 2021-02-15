@@ -1,6 +1,7 @@
 #include "Timer.h"
 #include "GUISystem.h"
 #include "Main.h"
+#include "psvita.h"
 
 //
 // Konstruktor
@@ -48,6 +49,13 @@ void CGUISystem::RenderBox(void)
     D3DCOLOR color;
     int		 alpha = int (m_FadingAlpha);
 
+	// PSVITA TWEAK
+	// Batch draw all sprites.
+	static VERTEX2D vertices[32 * 24 * 6]; // Max tiles * vertices per sprite
+	int batch_size = 0;
+
+	int sprite_count = 0;
+
     if (alpha < 0)
         return;
 
@@ -55,37 +63,59 @@ void CGUISystem::RenderBox(void)
 
     // Ecken
     //
-    m_Rahmen.RenderSprite(m_xPos,
-                          m_yPos, 0, color);
+	m_Rahmen.GetSpriteTriangles(m_xPos, m_yPos, 0, color, &vertices[batch_size]);
+	batch_size += 6;
+	m_Rahmen.GetSpriteTriangles(m_xPos + m_BoxSize.right + TILESIZE, m_yPos, 2, color, &vertices[batch_size]);
+	batch_size += 6;
+	m_Rahmen.GetSpriteTriangles(m_xPos, m_yPos + m_BoxSize.bottom + TILESIZE, 6, color, &vertices[batch_size]);
+	batch_size += 6;
+	m_Rahmen.GetSpriteTriangles(m_xPos + m_BoxSize.right  + TILESIZE, m_yPos + m_BoxSize.bottom + TILESIZE, 8, color, &vertices[batch_size]);
+	batch_size += 6;
 
-    m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + TILESIZE,
-                          m_yPos, 2, color);
+	//m_Rahmen.RenderSprite(m_xPos, m_yPos, 0, color);
+    //m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + TILESIZE, m_yPos, 2, color);
+    //m_Rahmen.RenderSprite(m_xPos, m_yPos + m_BoxSize.bottom + TILESIZE, 6, color);
+    //m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right  + TILESIZE, m_yPos + m_BoxSize.bottom + TILESIZE, 8, color);
 
-    m_Rahmen.RenderSprite(m_xPos,
-                          m_yPos + m_BoxSize.bottom + TILESIZE, 6, color);
-
-    m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right  + TILESIZE,
-                          m_yPos + m_BoxSize.bottom + TILESIZE, 8, color);
-
+	
     // Rand oben/unten
-    for (int i = 0; i < (m_BoxSize.right) / TILESIZE; i++)
+    for (int i = 0; i < (m_BoxSize.right) / TILESIZE; ++i)
     {
-        m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, m_yPos, 1, color);
-        m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, m_yPos + m_BoxSize.bottom + 20, 7, color);
+		m_Rahmen.GetSpriteTriangles(m_xPos + (i + 1) * TILESIZE, m_yPos, 1, color, &vertices[batch_size]);
+		batch_size += 6;
+		m_Rahmen.GetSpriteTriangles(m_xPos + (i + 1) * TILESIZE, m_yPos + m_BoxSize.bottom + 20, 7, color, &vertices[batch_size]);
+		batch_size += 6;
+       
+		//m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, m_yPos, 1, color);
+        //m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, m_yPos + m_BoxSize.bottom + 20, 7, color);
     }
 
     // Rand links/rechts
     for (int i = 0; i < (m_BoxSize.bottom) / TILESIZE; i++)
     {
-        m_Rahmen.RenderSprite(m_xPos, m_yPos + (i + 1) * TILESIZE, 3, color);
-        m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + 20, m_yPos + (i + 1) * TILESIZE, 5, color);
+		m_Rahmen.GetSpriteTriangles(m_xPos, m_yPos + (i + 1) * TILESIZE, 3, color, &vertices[batch_size]);
+		batch_size += 6;
+		m_Rahmen.GetSpriteTriangles(m_xPos + m_BoxSize.right + 20, m_yPos + (i + 1) * TILESIZE, 5, color, &vertices[batch_size]);
+		batch_size += 6;
+
+        //m_Rahmen.RenderSprite(m_xPos, m_yPos + (i + 1) * TILESIZE, 3, color);
+        //m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + 20, m_yPos + (i + 1) * TILESIZE, 5, color);
     }
 
     // Hintergrund in der Mitte
-    for (int i = 0; i < (m_BoxSize.right) / TILESIZE; i++)
-        for (int j = 0; j < (m_BoxSize.bottom) / TILESIZE; j++)
-            m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE,
-                                  m_yPos + (j + 1) * TILESIZE, 4, color);
+    for (int i = 0; i < (m_BoxSize.right) / TILESIZE; i++){
+        for (int j = 0; j < (m_BoxSize.bottom) / TILESIZE; j++){
+			m_Rahmen.GetSpriteTriangles(m_xPos + (i + 1) * TILESIZE, m_yPos + (j + 1) * TILESIZE, 4, color, &vertices[batch_size]);
+			batch_size += 6;
+            //m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, m_yPos + (j + 1) * TILESIZE, 4, color);
+		}
+	}
+
+	if (batch_size > 0)
+    {
+        DirectGraphics.SetTexture(m_Rahmen.itsTexIdx);
+        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, batch_size/3, &vertices[0]);
+    }
 
     // Text rendern
     int y_txt_offset = -5;
@@ -98,6 +128,7 @@ void CGUISystem::RenderBox(void)
     pDefaultFont->DrawText(m_xPos + TILESIZE * 3 / 2 - 8,
                             m_yPos + TILESIZE * 3 / 2 + y_txt_offset,
                             m_BoxText, color);
+
 }
 
 //

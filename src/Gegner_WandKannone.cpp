@@ -108,7 +108,7 @@ void GegnerWandKannone::DoKI(void)
 
 void GegnerWandKannone::GegnerExplode(void)
 {
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel (xPos-30+rand()%42, yPos-30+rand()%32, EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);

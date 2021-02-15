@@ -51,7 +51,7 @@ void GegnerAuge::DoKI(void)
 
     if (smokedelay < 0.0f)
     {
-        smokedelay = 0.3f;//0.1f; PSVITA TWEAK
+        smokedelay = 0.2f;//0.1f; PSVITA TWEAK
         if (BlickRichtung == RECHTS)
             PartikelSystem.PushPartikel (xPos +  8, yPos + 18, SMOKE2);
         else
@@ -145,7 +145,7 @@ void GegnerAuge::DoKI(void)
 void GegnerAuge::GegnerExplode(void)
 {
     // Explosion
-    for (int i=0; i<4/*5*/; i++) // PSVITA TWEAK
+    for (int i=0; i<5; i++)
         PartikelSystem.PushPartikel(float(xPos - 15) + rand()%20,
                                       float(yPos - 15) + rand()%40, EXPLOSION_MEDIUM2);
 

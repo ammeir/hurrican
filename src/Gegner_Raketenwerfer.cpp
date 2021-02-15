@@ -65,9 +65,7 @@ void GegnerRaketenwerfer::GegnerExplode(void)
 {
     PartikelSystem.PushPartikel(xPos-20 , yPos - 15, EXPLOSION_BIG);
 
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 16? 16: free_space_particles; // PSVITA TWEAK
-    for (int i=0; i<size /*20*/; i++)
+    for (int i=0; i<20; i++)
     {
         PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
     }

@@ -181,10 +181,10 @@ void GegnerFieserFireWalker::GegnerExplode(void)
 {
     PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
-    for (int i = 0; i < 6/*8*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 8; i++)
         PartikelSystem.PushPartikel(xPos - 30 + rand ()% 60,
                                       yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
-    for (int i = 0; i < 9/*12*/; i++) // PSVITA TWEAK
+    for (int i = 0; i < 12; i++)
         PartikelSystem.PushPartikel(xPos + rand ()% 50,
                                       yPos + rand ()% 50, SPIDERSPLITTER);
 

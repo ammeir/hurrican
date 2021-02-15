@@ -75,14 +75,18 @@ void GegnerEierMann::GegnerExplode(void)
 {
     PartikelSystem.PushPartikel (xPos, yPos, EXPLOSION_GIANT);
 
-    for (int i = 0; i < 8/*10*/; i++) // PSVITA TWEAK
+    /*for (int i = 0; i < 10; i++)
     {
         PartikelSystem.PushPartikel (xPos-30+rand()%100, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
         PartikelSystem.PushPartikel (xPos+10+rand()%40, yPos+10+rand()%40,  SPIDERSPLITTER);
-    }
+    }*/
 
-    for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel (xPos+rand()%80, yPos+rand()%80, SPLITTER);
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel (xPos-30+rand()%100, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
+    for (int i = 0; i < 10; i++)
+        PartikelSystem.PushPartikel (xPos+10+rand()%40, yPos+10+rand()%40,  SPIDERSPLITTER);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 

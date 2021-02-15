@@ -88,15 +88,23 @@ void GegnerFallingRock::DoKI(void)
 
 void GegnerFallingRock::GegnerExplode(void)
 {
-	int free_space_particles = PartikelSystem.GetSpacePartikel();
-	int size = free_space_particles > 24? 8: free_space_particles/3; // PSVITA TWEAK
     // und Splitter erzeugen Rauch
-    for (int i=0; i<size /*10*/; ++i)
+    /*for (int i=0; i<10; ++i)
     {
         PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%20 + 20, SMOKE);
         PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
         PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
-    }
+    }*/
+
+	// PSVITA TWEAK
+	// Make sequental calls so we can batch draw.
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%20 + 20, SMOKE);
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
+	for (int i=0; i< 10; ++i)
+		PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
+
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
     Player[0].Score += 100;
