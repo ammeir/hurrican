@@ -1,8 +1,7 @@
 Because of the history of this project, the Licensing situation is
 "complicated".
 
-The project was originally authored by Eiswuxe, then picked up by Pickle136, and
-finally by Nebu Pookins.
+The project was originally authored by Eiswuxe, then picked up by Pickle136, DKS, Nebu Pookins and ammeir.
 
 The code written by Eiswuxe is provided under the following license:
 
@@ -36,9 +35,6 @@ The code written by Pickle136 is provided under the following license:
 > All changes by myself within exisiting files are
 > under the same copyright as the original source. All original files are under
 > the MIT license.
-
-The code written by Nebu Pookins, for simplicity, is provided under the same
-license as Pickle136 stated above.
 
 The code written by Nebu Pookins, for simplicity, is provided under the same
 license as Pickle136 stated above.
